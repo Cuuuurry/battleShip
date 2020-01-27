@@ -1,2 +1,4 @@
 # battleShip
-Game design
+## Game design
+
+* More information to be added.
