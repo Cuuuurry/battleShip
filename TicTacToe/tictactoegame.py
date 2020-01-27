@@ -1,7 +1,11 @@
+from typing import Iterable, TypeVar
+from .board import Board
+from .player import Player
 class TicTacToeGame(object):
-    def __init__(self, dimensions: int) -> None:
-        self.board = None
-        self.players = [None] * 2
+    def __init__(self, dimensions: int, blank_char: str = "*") -> None:
+        self.blank_char = blank_char
+        self.board = Board(dimensions,dimensions,blank_char)
+        self.players = [Player() for _ in range(2)]
         self._cur_player_turn = 0
 
     def play(self) -> None:
