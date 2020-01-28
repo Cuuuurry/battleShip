@@ -2,17 +2,18 @@ from typing import Iterator, List
 
 
 class Board(object):
-    def __init__(self, num_rows: int, num_cols: int, blank_char: str) -> None:
-        self.contents = [[blank_char for col in range(num_cols)] for row in range(num_rows)]
+    def __init__(self, num_rows: int, num_cols: int, blank_char: str = "*") -> None:
+        self.contents_user1 = [[blank_char for col in range(num_cols)] for row in range(num_rows)]
+        self.contents_user2 = [[blank_char for col in range(num_cols)] for row in range(num_rows)]
         self.blank_char = blank_char
 
     @property
     def num_rows(self) -> int:
-        return len(self.contents)
+        return len(self.contents_user1)
 
     @property
     def num_cols(self) -> int:
-        return len(self[0])
+        return len(self.contents_user1[0])
 
     def __str__(self) -> str:
         """
@@ -28,17 +29,10 @@ class Board(object):
             rep += str(row_index) + sep + sep.join(row) + '\n'
         return rep
 
-
     def __iter__(self) -> Iterator[List[str]]:
         return iter(self.contents)
 
     def __getitem__(self, index: int) -> List[str]:
         return self.contents[index]
 
-    def is_full(self) -> bool:
-        return all(
-            (space != self.blank_char for row in self for space in row)
-        )
-        # for row in self:
-        #     for space in row:
-        #         space != self.blank_char
+

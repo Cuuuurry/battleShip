@@ -1,7 +1,7 @@
 from typing import Iterable, TypeVar
 from .board import Board
 from .player import Player
-class TicTacToeGame(object):
+class battleShip(object):
     def __init__(self, dimensions: int, blank_char: str = "*") -> None:
         self.blank_char = blank_char
         self.board = Board(dimensions,dimensions,blank_char)
@@ -28,6 +28,7 @@ class TicTacToeGame(object):
 
         :return:
         """
+
         return self.someone_won_horizontally() or self.someone_won_vertically() or self.someone_won_diagonally()
 
     def someone_won_horizontally(self) -> bool:
@@ -50,48 +51,18 @@ class TicTacToeGame(object):
     # d e f
     # h i j
 
-    def someone_won_vertically(self) -> bool:
-        for col in zip(*self.board):
-            if all_same(col):
-                return True
-        else:
-            return False
 
-    def someone_won_diagonally(self) -> bool:
-        return self.someone_won_with_left_diagonal() or self.someone_won_with_right_diagonal()
 
-    def someone_won_with_left_diagonal(self) -> bool:
-        """
-        Someone won like this
-        X
-          X
-            X
-        :return:
-        """
-        return all_same((self.board[i][i] for i in range(self.board.num_rows)))
 
-    def someone_won_with_right_diagonal(self) -> bool:
-        """
-        Some won like
-            X
-          X
-        X
-        :return:
-        """
 
-    def tie_game(self) -> bool:
-        """
-        This should only be called after a check for a win is done
-        :return:
-        """
-        return self.board.is_full()
+
 
     def change_turn(self) -> None:
         self._cur_player_turn = (self._cur_player_turn + 1) % 2
-        # if self._cur_player_turn == 0:
-        #     self._cur_player_turn = 1
-        # else:
-        #     self._cur_player_turn = 0
+        if self._cur_player_turn == 0:
+            self._cur_player_turn = 1
+        else:
+            self._cur_player_turn = 0
 
     def get_cur_player(self) -> "Player":
         return self.players[self._cur_player_turn]
