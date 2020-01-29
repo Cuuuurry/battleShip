@@ -1,3 +1,8 @@
+"""
+This File:
+    Board information
+"""
+
 from typing import Iterator, List
 
 

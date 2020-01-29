@@ -1,6 +1,13 @@
+"""
+This File:
+    Game process
+"""
+
 from typing import Iterable, TypeVar
 from .board import Board
 from .player import Player
+
+
 class battleShip(object):
     def __init__(self, dimensions: int, blank_char: str = "*") -> None:
         self.blank_char = blank_char

@@ -1,4 +1,10 @@
+"""
+This File:
+    Ship information
+"""
+
 import typing
+
 class ship(object):
     def __init__(self, shipNum: int):
         self.shipNum = shipNum
