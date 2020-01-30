@@ -4,7 +4,7 @@ This File:
         Count the fire
 """
 
-form typing import List
+from typing import List
 
 # for ship in ship
 
@@ -18,7 +18,16 @@ class Ship(object):
         self.ship_health = ship_size
 
     def ship_oriented(self, orientation: str):
-        self.ship_ori = orientation
+        # check orientation validation
+        if orientation.lower() in {"vertical", "v", "ve", "ver", "vert", "verti", "vertic", "vertica"}:
+            # set orientation
+            self.ship_ori = "vertical"
+        elif orientation.lower() in {"horizontal", "h", "ho", "hor", "hori", "horiz", "horizo", "horizon",
+                                     "horizont", "horizonta", "horizontal"}:
+            # set orientation
+            self.ship_ori = "horizontal"
+        else:
+            raise Exception("{} does not represent an Orientation".format(orientation))
 
     def ship_located(self, location: List[int]):
         self.ship_loc = location
@@ -33,9 +42,6 @@ class Ship(object):
             return False
 
 
-
-
-
-
-
-
+if __name__ == '__main__':
+    S1 = Ship("monkey", 3)
+    S1.ship_oriented("v")

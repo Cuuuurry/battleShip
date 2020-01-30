@@ -20,30 +20,26 @@ class BattleShip(object):
     def __init__(self, nrow, ncol, ship_size_dict) -> None:
         self.nrow = nrow
         self.ncol = ncol
-        self.ship_size_dict = ship_size_dict
         self.players = [Player() for _ in range(2)]
         self.cur_player_turn = 0
 
-    def load_ships(self, ship_name, location, orientation):
+    def load_ship(self, ship: Ship, player: Player, orientation, location):
         '''Place ship of size, size, starting at position (x,y) and oriented
         vertically (oreitnation = 0) or horizontally (orientation = 1).'''
-        size = self.ship_size_dict[ship_name]
-        #check orientation validation
-        if orientation.lower() in {"vertical", "v", "ve", "ver", "vert", "verti", "vertic", "vertica"}:
-            isVertical = True
-        elif orientation.lower() in {"horizontal", "h", "ho", "hor", "hori", "horiz", "horizo", "horizon",
-                                     "horizont", "horizonta", "horizontal"}:
-            isVertical = False
-        else:
-            raise Exception("{} does not represent an Orientation".format(orientation))
+        board = player.board
+        size = ship.ship_size
 
-        #check valid location
+        # check orientation validation and orientation setting
+        ship.ship_oriented(orientation)
+        is_vertical = bool(ship.ship_ori == "vertical")
+
+        # check valid location
         if len(location) != 2:
             raise Exception("{} is not in the form x, y.".format(location))
 
         col, row = location
 
-        #check whether row or col is an integer
+        # check whether row or col is an integer
         if type(row) != int:
             raise Exception(" {} is not a valid value for row.\n It should be an integer "
                             "between 0 and {}.".format(row, self.nrow - 1))
@@ -51,37 +47,44 @@ class BattleShip(object):
             raise Exception(" {} is not a valid value for col.\n It should be an integer "
                             "between 0 and {}.".format(col, self.ncol - 1))
 
-        #check the coordinate is valid or not
+        # check the coordinate is valid or not
         if col >= self.ncol or col < 0 or row >= self.nrow or row < 0:
             raise Exception("Cannot place {} {} at {}, {} "
                             "because it would be out of bounds."
-                            .format(ship_name, orientation, col, row))
+                            .format(ship.ship_name, orientation, col, row))
 
-        #check The ship is out of bound
-        if bool((row + size - 1 > self.nrow) * isVertical +
-                (col + size - 1 > self.ncol) * (1 - isVertical)):
+        # check The ship is out of bound
+        if bool((row + size - 1 > self.nrow) * is_vertical +
+                (col + size - 1 > self.ncol) * (1 - is_vertical)):
             raise Exception("Cannot place {} {} at {}, {} "
-                            "because it would be out of bounds.".format(ship_name, orientation, col, row))
+                            "because it would be out of bounds.".format(ship.ship_name, orientation, col, row))
 
         # Checks to make sure the ship doesn't lie outside the board and that
         # no ships have been placed on those spots.
-        if not isVertical:
+        if not is_vertical:
             for x in range(row, row + size):
-                if self.board[x][col] != '*':
+                if board[x][col] != '*':
                     raise Exception("Cannot place {} {} at {},{} because it would end up out of bounds."
-                                    .format(ship_name, orientation, row, col))
-        elif isVertical:
+                                    .format(ship.ship_name, orientation, row, col))
+        elif is_vertical:
             for y in range(col, col + size):
-                if self.board[row][y] != '*':
+                if board[row][y] != '*':
                     raise Exception("Cannot place {} {} at {} {} because it would end up out of bounds."
-                                    .format(ship_name, orientation, row, col))
+                                    .format(ship.ship_name, orientation, row, col))
 
-        if not isVertical:
+        if not is_vertical:
             for x in range(row, row + size):
-                self.board[x][col] = ship_name[0]
-        elif isVertical:
+                board[x][col] = ship.ship_name[0]
+        elif is_vertical:
             for y in range(col, col + size):
-                self.board[row][y] = ship_name[0]
+                board[row][y] = ship.ship_name[0]
+
+    def load_ships(self):
+        for player in self.players:
+            for ship in player.ship:
+                orientation = input("Please enter orientation here")
+                location = input("Please enter location here")
+                self.load_ship(ship, player, orientation, location)
 
 
 
