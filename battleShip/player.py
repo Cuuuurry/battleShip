@@ -1,8 +1,6 @@
 """"
 This File:
-    Player information:
-        player name
-
+    Printout game information for players
 """
 import sys
 import typing
@@ -10,22 +8,49 @@ import typing
 
 class Player(object):
     def __init__(self) -> None:
-        self.name = None
-        self.ps_load_ship = None
+        self.player_name = None
+        self.ship = ship_list  # list[ship]
+        self.board = None
+        self.scan_board = None
 
     def __str__(self) -> str:
-        return self.name
+        return self.player_name
 
-    def initial_info(self, ):
-        self.name = input("Player 1 please enter your name: ")
-        print("{}'s Placement Board".format(self.name))
-        return self.name
+    def player_info(self, ):
+        self.player_name = input("Player 1 please enter your name: ")
+        print("{}'s Placement Board".format(self.player_name))
+        return self.player_name
 
-    def process_info(self):
-        self.ps_load_ship = input("{} ".format(self.name, ))
+    def load_info(self, ):
+        print("{} enter horizontal or vertical for the {} of {} which is {} long: ".format(
+            self.player_name, self.ship_ori, self.ship_name, self.ship_size
+        ))
 
-Bob enter horizontal or vertical for the orientation of Patrol which is 2 long: Bob, enter the starting position for your Patrol ship ,which is 2 long, in the form row, column: Bob's Placement Board
-Bob enter horizontal or vertical for the orientation of Submarine which is 3 long: Bob, enter the starting position for your Submarine ship ,which is 3 long, in the form row, column: Bob's Placement Board
+        print("{}, enter the starting position for your {} ship ,which is {} long, in the form {}, {}: ".format(
+            self.player_name, self.ship_name, self.ship_size, self.ship_loc[1], self.ship_loc[0]
+        ))
 
+        print("{}'s Placement Board".format(self.player_name))
 
->>>>>>> e41146a3f125c0f56361b908b2e74dd6d68356bd
+    def status_info(self,):
+        print("{}'s Board: ".format(self.player_name))
+
+    def status_scan_info(self):
+        print("{}'s Scanning Board: ".format(self.player_name))
+
+    def fire_info(self, ):
+        print("{}, enter the location you want to fire at in the form {}, {}: ".format(
+            self.player_name, self.ship_loc[1], self.ship_loc[0]))
+
+    @staticmethod
+    def fire_miss():
+        print("Miss")
+
+    def fire_on_target(self, ):
+        print("You hit {}'s {}!".format(self.player_name, self.ship_name))
+
+    def ship_status(self, ):
+        print("You destroyed {}'s {}".format(self.player_name, self.ship_name))
+
+    def game_result(self, ):
+        print("{} won the game!".format(self.player_name))
