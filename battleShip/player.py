@@ -7,7 +7,7 @@ import typing
 
 
 class Player(object):
-    def __init__(self) -> None:
+    def __init__(self, ship_list) -> None:
         self.player_name = None
         self.ship = ship_list  # list[ship]
         self.board = None

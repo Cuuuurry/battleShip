@@ -17,7 +17,7 @@ class BattleShip(object):
         Two players
         Four boards: two initial boards (static), two scan boards (dynamic)
     """
-    def __init__(self, nrow, ncol, ship_size_dict) -> None:
+    def __init__(self, nrow, ncol) -> None:
         self.nrow = nrow
         self.ncol = ncol
         self.players = [Player() for _ in range(2)]
