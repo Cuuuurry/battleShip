@@ -35,9 +35,10 @@ class BattleShip(object):
         # Checks to make sure the ship doesn't lie outside the board and that
         # no ships have been placed on those spots.
         #check orientation validation
-        if orientation == "vertical":
+        if orientation.lower() in {"vertical", "v", "ve", "ver", "vert", "verti", "vertic", "vertica"}:
             isVertical = True
-        elif orientation == "horizontal":
+        elif orientation.lower() in {"horizontal", "h", "ho", "hor", "hori", "horiz", "horizo", "horizon",
+                                     "horizont", "horizonta", "horizontal"}:
             isVertical = False
         else:
             raise Exception("{} does not represent an Orientation".format(orientation))
@@ -46,15 +47,21 @@ class BattleShip(object):
         if len(location) != 2:
             raise Exception("{} is not in the form x, y.".format(location))
 
-        col, row = *location
+        col, row = location
 
-        #check
-        if type
+        #check whether row or col is an integer
+        if type(row) != int or row >= self.nrow or row < 0:
+            raise Exception(" {} is not a valid value for row.\n It should be an integer "
+                            "between 0 and {}.".format(row, self.nrow - 1))
+        elif col >= self.ncol or col < 0 or type(col) != int:
+            raise Exception(" {} is not a valid value for col.\n It should be an integer "
+                            "between 0 and {}.".format(col, self.ncol - 1))
 
-
-
-        if col >= self.ncol or col < 0 or row >= self.nrow or row < 0:
-            raise Exception("Cannot place {} {} at {} {}".format(ship_name, orientation , row, col))
+        #check The coordinate is out of bound
+        if bool((row + size - 1 > self.nrow) * isVertical +
+                (col + size - 1 > self.ncol) * (1 - isVertical)):
+            raise Exception("Cannot place {} {} at {}, {} "
+                            "because it would be out of bounds.".format(ship_name, orientation, row, col))
 
         if not isVertical:
             for x in range(col, col + size):
