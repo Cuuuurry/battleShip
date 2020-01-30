@@ -17,25 +17,51 @@ class BattleShip(object):
         Two players
         Four boards: two initial boards (static), two scan boards (dynamic)
     """
-    def __init__(self, ship_size, ) -> None:
-        self.ship_size = ship_size
-        self.blank_char = blank_char
-        self.board = Board(num_rows, num_cols, is_scan)
+    def __init__(self, nrow, ncol, ship_size_dict) -> None:
+        self.nrow = nrow
+        self.ncol = ncol
+        self.ship_size_dict = ship_size_dict
+        self.board = {}
+        for key in ["p1", "p2", "p1_scan", "p2_scan"]:
+            self.board[key] = Board(nrow, ncol)
         self.players = [Player() for _ in range(2)]
         self.cur_player_turn = 0
 
-    def load_ships(self, size, x, y, orientation):
+    def load_ships(self, ship_name, location, orientation):
         '''Place ship of size, size, starting at position (x,y) and oriented
         vertically (oreitnation = 0) or horizontally (orientation = 1).'''
-        self.check_collisions(size, x, y, orientation)
+        size = self.ship_size_dict[ship_name]
+        self.check_collisions(size, col, row, orientation)
         # Checks to make sure the ship doesn't lie outside the board and that
         # no ships have been placed on those spots.
-        if not orientation:
-            for x in range(x, x + size):
-                self.board[(x,y)] = size
-        elif orientation:
-            for y in range(y, y + size):
-                self.board[(x,y)] = size
+        #check orientation validation
+        if orientation == "vertical":
+            isVertical = True
+        elif orientation == "horizontal":
+            isVertical = False
+        else:
+            raise Exception("{} does not represent an Orientation".format(orientation))
+
+        #check valid location
+        if len(location) != 2:
+            raise Exception("{} is not in the form x, y.".format(location))
+
+        col, row = *location
+
+        #check
+        if type
+
+
+
+        if col >= self.ncol or col < 0 or row >= self.nrow or row < 0:
+            raise Exception("Cannot place {} {} at {} {}".format(ship_name, orientation , row, col))
+
+        if not isVertical:
+            for x in range(col, col + size):
+                self.board[x][row] = ship_name[0]
+        elif isVertical:
+            for y in range(row, row + size):
+                self.board[col][y] = ship_name[0]
 
     def check_collisions(self, size, x, y, orientation):
         '''Checks to make sure the ship doesn't lie outside the board and that
