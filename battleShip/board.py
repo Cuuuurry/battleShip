@@ -7,12 +7,9 @@ from typing import Iterator, List
 
 
 class Board(object):
-    def __init__(self, num_rows: int, num_cols: int, is_scan: bool = False, blank_char: str = "*") -> None:
+    def __init__(self, num_rows: int, num_cols: int, blank_char: str = "*") -> None:
         self.num_rows = num_rows
         self.num_cols = num_cols
-        self.is_scan = is_scan
-        if self.is_scan:
-            self.scan_char = "0"
         self.board = [[blank_char for col in range(num_cols)] for row in range(num_rows)]
         self.blank_char = blank_char
 

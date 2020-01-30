@@ -31,9 +31,6 @@ class BattleShip(object):
         '''Place ship of size, size, starting at position (x,y) and oriented
         vertically (oreitnation = 0) or horizontally (orientation = 1).'''
         size = self.ship_size_dict[ship_name]
-        self.check_collisions(size, col, row, orientation)
-        # Checks to make sure the ship doesn't lie outside the board and that
-        # no ships have been placed on those spots.
         #check orientation validation
         if orientation.lower() in {"vertical", "v", "ve", "ver", "vert", "verti", "vertic", "vertica"}:
             isVertical = True
@@ -50,18 +47,39 @@ class BattleShip(object):
         col, row = location
 
         #check whether row or col is an integer
-        if type(row) != int or row >= self.nrow or row < 0:
+        if type(row) != int:
             raise Exception(" {} is not a valid value for row.\n It should be an integer "
                             "between 0 and {}.".format(row, self.nrow - 1))
-        elif col >= self.ncol or col < 0 or type(col) != int:
+        elif type(col) != int:
             raise Exception(" {} is not a valid value for col.\n It should be an integer "
                             "between 0 and {}.".format(col, self.ncol - 1))
 
-        #check The coordinate is out of bound
+        #check the coordinate is valid or not
+        if col >= self.ncol or col < 0 or row >= self.nrow or row < 0:
+            raise Exception("Cannot place {} {} at {}, {} "
+                            "because it would be out of bounds."
+                            .format(ship_name, orientation, col, row))
+
+        #check The ship is out of bound
         if bool((row + size - 1 > self.nrow) * isVertical +
                 (col + size - 1 > self.ncol) * (1 - isVertical)):
             raise Exception("Cannot place {} {} at {}, {} "
-                            "because it would be out of bounds.".format(ship_name, orientation, row, col))
+                            "because it would be out of bounds.".format(ship_name, orientation, col, row))
+
+        # Checks to make sure the ship doesn't lie outside the board and that
+        # no ships have been placed on those spots.
+        if not isVertical:
+            for x in range(col, col + size):
+                if self.board[x][row] != '*':
+                    raise Exception("Cannot place {ship} {direction} at {row}, "
+                                    "{col} because it would end up out of bounds."
+                                    .format(ship_name, orientation, col, row))
+        elif isVertical:
+            for y in range(row, row + size):
+                if self.board[col][y] != '*':
+                    raise Exception("Cannot place {ship} {direction} at {row}, {col} "
+                                    "because it would overlap with {overlapping_ships}."
+                                    .format(ship_name))
 
         if not isVertical:
             for x in range(col, col + size):
@@ -70,30 +88,12 @@ class BattleShip(object):
             for y in range(row, row + size):
                 self.board[col][y] = ship_name[0]
 
-    def check_collisions(self, size, x, y, orientation):
-        '''Checks to make sure the ship doesn't lie outside the board and that
-        no ships have been placed on those spots.'''
-        if not orientation:
-            if self.size < (x + size) or self.size < y:
-                raise OutofboardError()
-            for x in range(x, x + size):
-                if self.board.get((x, y)) != '.':
-                    raise ShipAlreadyThere()
-        elif orientation:
-            if self.size < (y + size) or self.size < x:
-                raise OutofboardError()
-            for y in range(y, y + size):
-                if self.board.get((x, y)) != '.':
-                    raise ShipAlreadyThere()
 
-    def fire(self):
-        if not self.human:
-            # checks to see if the current player should be a computer.
-            x = random.randint(0, self.size)
-            y = random.randint(0, self.size)
-        else:
-            x = raw_input('What is the x-coordinate you wish to fire on? ')
-            y = raw_input('What is the y-coordinate you wish to fire on? ')
+
+
+    def ship_fire(self, location):
+        x = input('What is the x-coordinate you wish to fire on? ')
+        y = input('What is the y-coordinate you wish to fire on? ')
         try:
             x, y = int(x), int(y)
             # verifies that x and y are valid integers.
