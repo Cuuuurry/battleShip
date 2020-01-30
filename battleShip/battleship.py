@@ -21,9 +21,6 @@ class BattleShip(object):
         self.nrow = nrow
         self.ncol = ncol
         self.ship_size_dict = ship_size_dict
-        self.board = {}
-        for key in ["p1", "p2", "p1_scan", "p2_scan"]:
-            self.board[key] = Board(nrow, ncol)
         self.players = [Player() for _ in range(2)]
         self.cur_player_turn = 0
 
@@ -69,24 +66,22 @@ class BattleShip(object):
         # Checks to make sure the ship doesn't lie outside the board and that
         # no ships have been placed on those spots.
         if not isVertical:
-            for x in range(col, col + size):
-                if self.board[x][row] != '*':
-                    raise Exception("Cannot place {ship} {direction} at {row}, "
-                                    "{col} because it would end up out of bounds."
-                                    .format(ship_name, orientation, col, row))
+            for x in range(row, row + size):
+                if self.board[x][col] != '*':
+                    raise Exception("Cannot place {} {} at {},{} because it would end up out of bounds."
+                                    .format(ship_name, orientation, row, col))
         elif isVertical:
-            for y in range(row, row + size):
-                if self.board[col][y] != '*':
-                    raise Exception("Cannot place {ship} {direction} at {row}, {col} "
-                                    "because it would overlap with {overlapping_ships}."
-                                    .format(ship_name))
+            for y in range(col, col + size):
+                if self.board[row][y] != '*':
+                    raise Exception("Cannot place {} {} at {} {} because it would end up out of bounds."
+                                    .format(ship_name, orientation, row, col))
 
         if not isVertical:
-            for x in range(col, col + size):
-                self.board[x][row] = ship_name[0]
+            for x in range(row, row + size):
+                self.board[x][col] = ship_name[0]
         elif isVertical:
-            for y in range(row, row + size):
-                self.board[col][y] = ship_name[0]
+            for y in range(col, col + size):
+                self.board[row][y] = ship_name[0]
 
 
 
@@ -132,8 +127,8 @@ class BattleShip(object):
                 self.opponent.board.get((x, y))
             self.opponent.board[(x, y)] = 'x'
 
-    def turn(self):
-        raw_input(self.name + ''''s turn''' + ' push enter to continue')
+    def change_turn(self):
+        input(self.name + ''''s turn''' + ' push enter to continue')
         if not self.human and self.opponent.human:
             pass
         else:
@@ -147,6 +142,11 @@ class BattleShip(object):
         self.fire()
         for n in range(20):
             print('')
+        self._cur_player_turn = (self._cur_player_turn + 1) % 2
+        if self._cur_player_turn == 0:
+            self._cur_player_turn = 1
+        else:
+            self._cur_player_turn = 0
 
     def play(self) -> None:
         """
@@ -177,34 +177,12 @@ class BattleShip(object):
 
         return self.someone_won_horizontally() or self.someone_won_vertically() or self.someone_won_diagonally()
 
-    def someone_won_horizontally(self) -> bool:
-        for row in self.board:
-            if all_same(row):
-                return True
-            else:
-                return False
-
-        # for i in range(self.board.rows):
-        #     if self.board.row_all_same(self.board[i])
-        #
-        # do any of the rows
-        # have all of the same characters
-        return any(
-            (all_same(row) for row in self.board)
-        )
-
-    # a b c
-    # d e f
-    # h i j
 
 
 
-    def change_turn(self):
-        self._cur_player_turn = (self._cur_player_turn + 1) % 2
-        if self._cur_player_turn == 0:
-            self._cur_player_turn = 1
-        else:
-            self._cur_player_turn = 0
+
+
+
 
     def get_cur_player(self):
 
