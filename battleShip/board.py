@@ -34,8 +34,8 @@ class Board(object):
     def __getitem__(self, row: int, col: int) -> List[str]:
         return self.board[row][col]
 
-    def board_record(self, row, col, record_stuff):
-        self.board[row][col] = record_stuff
+    def __setitem__(self, index, value):
+        self.board[index[0]][index[1]] = value
 
 
 
