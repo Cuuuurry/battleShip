@@ -15,11 +15,11 @@ class Board(object):
 
     def __str__(self):
         max_digit_num = max([len(str(self.num_rows)), len(str(self.num_cols))])
-        sep = ' ' * max_digit_num #+ '\n'
+        sep = ' ' * max_digit_num
         rep = sep
         for i in range(self.num_cols):
             rep += ' ' + ' ' * (max_digit_num - len(str(i))) + str(i)
-        rep += "\n"
+        rep += '\n'
         for row_index, row in enumerate(self):
             num_of_space = max_digit_num - len(str(row_index))
             rep += ' ' * num_of_space + str(row_index) + sep + sep.join(row) + '\n'
@@ -28,25 +28,13 @@ class Board(object):
     def __iter__(self) -> Iterator[List[str]]:
         return iter(self.board)
 
-    def __getitem__(self, row: int, col: int) -> List[str]:
+    def __getitem__(self, row: int, col: int) -> str:
         return self.board[row][col]
 
-    def __setitem__(self, index, value):
+    def __setitem__(self, index: List[int], value: str):
         self.board[index[0]][index[1]] = value
 
 
-
-
-
 if __name__ == "__main__":
-    board_case = Board(13,13)
+    board_case = Board(13, 13)
     print(board_case)
-
-
-
-
-
-
-
-
-
