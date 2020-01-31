@@ -14,11 +14,8 @@ else:
     print("You are not able to vote in the United States.")
 """
 
-
+"""
 class GameLoopError(Exception):
-    """
-    Self-defined error class
-    """
     def __init__(self, reason: str) -> None:
         self.reason = reason
 
@@ -71,3 +68,22 @@ while ship_loc is None:
         raise Exception(f"Cannot place {ship_name} {orientation}ly at col, row: {col}, {row} "
                         "because it would be out of bounds."
                         )
+"""
+
+from board import Board
+from checking import LocationError, Validation
+from player import Player
+from ship import Ship
+import sys
+from sys import argv
+from battleship import BattleShip
+
+
+ship_list = []
+ship_size_dict = {}
+with open(argv[1], "r") as f:
+    for i, line in enumerate(f):
+        ship_size_dict[line.split()[0]] = line.split()[1]
+
+test = BattleShip(9, 9)
+test.ship_dict_loading(ship_size_dict)
