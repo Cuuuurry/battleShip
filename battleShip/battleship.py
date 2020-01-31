@@ -182,5 +182,3 @@ if __name__ == "__main__":
     ship_dict = {"P": 3, "U":2}
     battle = BattleShip(9, 9, ship_dict)
     battle.play()
-    print(self.cur_player.name)
-    print(self.cur_opponent.name)
