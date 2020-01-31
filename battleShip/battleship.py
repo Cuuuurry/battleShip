@@ -12,25 +12,24 @@ from ship import Ship
 print("Successfully import classes")
 
 
-
-
 class BattleShip(object):
     """
     Summary:
         Two players
         Four boards: two initial boards (static), two scan boards (dynamic)
     """
-    def __init__(self, num_rows, num_cols) -> None:
+    def __init__(self, num_rows, num_cols, ship_size_dict) -> None:
         self.num_rows = num_rows
         self.num_cols = num_cols
         self.players = []
         self.cur_player = None
         self.cur_opponent = None
+        self.ship_size_dict = ship_size_dict
 
     def ship_dict_loading(self, ship_size_dict):
         ship_list = []
         for ship_name, ship_size in ship_size_dict.items():
-            new_ship = Ship(ship_name, ship_size)
+            new_ship = Ship(ship_name, int(ship_size))
             ship_list.append(new_ship)
         for i in range(2):
             new_player = Player(ship_list)
@@ -38,10 +37,12 @@ class BattleShip(object):
         self.cur_player, self.cur_opponent = self.players
 
     def players_register(self):
+        i = 1
         for player in self.players:
-            player.player_info()
+            player.player_info(i)
             player.board = Board(self.num_rows, self.num_cols, blank_char="0")
             player.scan_board = Board(self.num_rows, self.num_cols)
+            i += 1
 
     def load_ship(self, ship: Ship, orientation, location):
         '''Place ship of size, size, starting at position (x,y) and oriented
@@ -87,10 +88,15 @@ class BattleShip(object):
         for i in range(2):
             player = self.cur_player
             for ship in player.ship:
-                orientation = input("Please enter orientation here")
-                location = input("Please enter location here")
+                orientation = input("Please enter orientation here: ")
+                location = input("Please enter location here: ")
                 self.load_ship(ship, orientation, location)
             self.change_turn()
+
+    def initial_all_stats(self):
+        for player in self.players:
+            player.player_health_initializer()
+
 
     def ship_fire(self):
         location = input('Pleas enter the location you wish to fire on: ')
@@ -116,10 +122,7 @@ class BattleShip(object):
         else:
             player.scan_board[[x, y]] = opponent.board[x][y]
 
-    def battle_news(self, fire_location: Tuple[int]):
-        #check ships:
-        player = self.cur_player
-        opponent = self.cur_opponent
+        fire_location = (x, y)
         for ship in opponent.ship:
             if fire_location in ship.ship_loc:
                 player.fire_on_target(opponent.player_name, ship)
@@ -133,8 +136,18 @@ class BattleShip(object):
     def change_turn(self):
         self.cur_player, self.cur_opponent = self.cur_opponent, self.cur_player
 
+    def display_game_stat(self):
+
+
     def is_game_over(self):
-        if self.cur_player
+        cur_opponent = self.cur_opponent
+        if not cur_opponent.health:
+            return True
+        else:
+            return False
+
+    def display_the_winner(self):
+        print(self.cur_player)
 
     def play(self) -> None:
         """
@@ -144,12 +157,14 @@ class BattleShip(object):
         :return:
         """
         # setups
-
-
+        self.ship_dict_loading(self.ship_size_dict)
+        self.players_register()
+        self.load_all_ships()
+        self.initial_all_stats()
+        self.display_game_stat()
+        self.ship_fire()
         while not self.is_game_over():
-            self.display_game_state()
-            cur_player = self.get_cur_player()
-            the_move = cur_player.get_move()
-            the_move.make()
             self.change_turn()
+            self.display_game_state()
+            self.ship_fire()
         self.display_the_winner()

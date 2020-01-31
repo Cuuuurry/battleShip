@@ -28,8 +28,8 @@ class Board(object):
     def __iter__(self) -> Iterator[List[str]]:
         return iter(self.board)
 
-    def __getitem__(self, row: int, col: int) -> str:
-        return self.board[row][col]
+    def __getitem__(self, index: List[int]) -> str:
+        return self.board[index[0]][index[1]]
 
     def __setitem__(self, index: List[int], value: str):
         self.board[index[0]][index[1]] = value
@@ -44,3 +44,4 @@ if __name__ == "__main__":
     print(board_case)
     board_case[[1,2]] = "P"
     print(board_case)
+    print(board_case[[0,1]])

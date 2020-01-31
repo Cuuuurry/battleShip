@@ -42,6 +42,7 @@ class Validation(object):
     def location_fire_checking(self, x, y):
         player = self.player
         board = player.scan_board
+        opponent = self.opponent
         if not board.is_in_bounds(x, y):
             raise LocationError(f'{x}, {y} is not in bounds of our '
                                 f'{board.num_rows} X {board.num_cols} board')
@@ -77,13 +78,13 @@ class Validation(object):
 
         if not is_vertical:
             for row in range(x, x + ship.ship_size):
-                if board[row][y] != '*':
+                if board[[row, y]] != '*':
                     raise Exception("Cannot place {} {} at {},{} because it would end up out of bounds."
                                     .format(ship.ship_name, ship.ship_ori, x, y))
 
         elif is_vertical:
             for col in range(y, y + ship.ship_size):
-                if board[x][col] != '*':
+                if board[[x, col]] != '*':
                     raise Exception("Cannot place {} {} at {} {} because it would end up out of bounds."
                                     .format(ship.ship_name, ship.ship_ori, x, y))
 
