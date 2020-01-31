@@ -5,6 +5,8 @@ This File:
 import sys
 import typing
 
+from ship import Ship
+
 
 class Player(object):
     def __init__(self, ship_list) -> None:
@@ -54,11 +56,13 @@ class Player(object):
     def fire_miss():
         print("Miss")
 
-    def fire_on_target(self, ):
-        print("You hit {}'s {}!".format(self.player_name, self.ship_name))
+    @staticmethod
+    def fire_on_target(opponent_name, ship: Ship):
+        print("You hit {}'s {}!".format(opponent_name, ship.ship_name))
 
-    def ship_status(self, ):
-        print("You destroyed {}'s {}".format(self.player_name, self.ship_name))
+    @staticmethod
+    def ship_status(opponent_name, ship: Ship):
+        print("You destroyed {}'s {}".format(opponent_name, ship.ship_name))
 
     def game_result(self, ):
         print("{} won the game!".format(self.player_name))

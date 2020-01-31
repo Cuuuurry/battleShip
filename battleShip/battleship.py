@@ -23,17 +23,19 @@ class BattleShip(object):
     def __init__(self, num_rows, num_cols) -> None:
         self.num_rows = num_rows
         self.num_cols = num_cols
-        self.players = [Player() for _ in range(2)]
-        self.cur_player_turn = 0
-        self.cur_player, self.cur_opponent = self.players
+        self.players = []
+        self.cur_player = None
+        self.cur_opponent = None
 
     def ship_dict_loading(self, ship_size_dict):
         ship_list = []
         for ship_name, ship_size in ship_size_dict.items():
             new_ship = Ship(ship_name, ship_size)
             ship_list.append(new_ship)
-        for player in self.players:
-            player.ship = ship_list
+        for i in range(2):
+            new_player = Player(ship_list)
+            self.players.append(new_player)
+        self.cur_player, self.cur_opponent = self.players
 
     def players_register(self):
         for player in self.players:
@@ -120,13 +122,19 @@ class BattleShip(object):
         opponent = self.cur_opponent
         for ship in opponent.ship:
             if fire_location in ship.ship_loc:
+                player.fire_on_target(opponent.player_name, ship)
                 ship.ship_health_change()
-                ship.ship_destroyed()
+                if ship.ship_destroyed():
+                    player.ship_status(opponent.player_name, ship)
+                player.player_health_change()
             else:
                 player.fire_miss()
 
     def change_turn(self):
         self.cur_player, self.cur_opponent = self.cur_opponent, self.cur_player
+
+    def is_game_over(self):
+        if self.cur_player
 
     def play(self) -> None:
         """
@@ -135,6 +143,9 @@ class BattleShip(object):
 
         :return:
         """
+        # setups
+
+
         while not self.is_game_over():
             self.display_game_state()
             cur_player = self.get_cur_player()

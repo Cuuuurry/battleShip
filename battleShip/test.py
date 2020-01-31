@@ -87,3 +87,6 @@ with open(argv[1], "r") as f:
 
 test = BattleShip(9, 9)
 test.ship_dict_loading(ship_size_dict)
+
+
+
