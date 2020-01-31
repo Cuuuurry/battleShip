@@ -27,8 +27,8 @@ class Player(object):
     def player_health_change(self, ):
         self.player_health -= 1
 
-    def player_info(self, ):
-        self.player_name = input("Player 1 please enter your name: ")
+    def player_info(self, i):
+        self.player_name = input(f"Player {i} please enter your name: ")
         print("{}'s Placement Board".format(self.player_name))
 
     def load_info(self, ):
@@ -66,3 +66,13 @@ class Player(object):
 
     def game_result(self, ):
         print("{} won the game!".format(self.player_name))
+
+
+if __name__ == "__main__":
+    ship1 = Ship("monkey_1", 3)
+    ship2 = Ship("monkey_2", 3)
+    ship_list = [ship1, ship2]
+    bob = Player(ship_list)
+    sally = Player(ship_list)
+    bob.player_info(1)
+    print(bob)
