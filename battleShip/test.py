@@ -14,6 +14,18 @@ else:
     print("You are not able to vote in the United States.")
 """
 
+
+class GameLoopError(Exception):
+    """
+    Self-defined error class
+    """
+    def __init__(self, reason: str) -> None:
+        self.reason = reason
+
+    def __str__(self) -> str:
+        return self.reason
+
+
 # suppose accepted a string format of "1, 2"
 ncol = 9
 nrow = 9
