@@ -34,6 +34,10 @@ class Board(object):
     def __setitem__(self, index: List[int], value: str):
         self.board[index[0]][index[1]] = value
 
+    def is_in_bounds(self, row: int, col: int) -> bool:
+        return (0 <= row < self.num_rows and
+                0 <= col < self.num_cols)
+
 
 if __name__ == "__main__":
     board_case = Board(13, 13)
