@@ -17,15 +17,20 @@ class Ship(object):
 
     def ship_oriented(self, orientation: str):
         # check orientation validation
-        if orientation.lower() in {"vertical", "v", "ve", "ver", "vert", "verti", "vertic", "vertica"}:
-            # set orientation
-            self.ship_ori = "vertical"
-        elif orientation.lower() in {"horizontal", "h", "ho", "hor", "hori", "horiz", "horizo", "horizon",
-                                     "horizont", "horizonta", "horizontal"}:
-            # set orientation
-            self.ship_ori = "horizontal"
-        else:
-            raise Exception("{} does not represent an Orientation".format(orientation))
+        while True:
+            if orientation.lower() in {"vertical", "v", "ve", "ver", "vert", "verti", "vertic", "vertica"}:
+                # set orientation
+                self.ship_ori = "vertical"
+                break
+            elif orientation.lower() in {"horizontal", "h", "ho", "hor", "hori", "horiz", "horizo", "horizon",
+                                         "horizont", "horizonta", "horizontal"}:
+                # set orientation
+                self.ship_ori = "horizontal"
+                break
+            else:
+                print("{} does not represent an Orientation".format(orientation))
+                orientation = input("Please enter a valid orientation: ")
+
 
     def ship_located(self, location: Tuple[int]):
         self.ship_loc = set()
@@ -46,4 +51,4 @@ class Ship(object):
 
 if __name__ == '__main__':
     S1 = Ship("monkey", 3)
-    S1.ship_oriented("v")
+    S1.ship_oriented("v ")
