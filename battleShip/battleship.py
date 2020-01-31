@@ -10,6 +10,20 @@ from player import Player
 from ship import Ship
 print("Successfully import classes")
 
+class LocationError(Exception):
+    def __init__(self, reason: str) -> None:
+        self.reason = reason
+
+    def __str__(self) -> str:
+        return self.reason
+
+class Orientation(Exception):
+    def __init__(self, reason: str) -> None:
+        self.reason = reason
+
+    def __str__(self) -> str:
+        return self.reason
+
 
 class BattleShip(object):
     """
@@ -23,6 +37,12 @@ class BattleShip(object):
         self.players = [Player() for _ in range(2)]
         self.cur_player_turn = 0
 
+    def players_register(self):
+        for player in self.players:
+            player.player_info()
+            player.board = Board(self.nrow, self.ncol)
+            player.scan_board = Board(self.nrow, self.ncol)
+
     def load_ship(self, ship: Ship, player: Player, orientation, location):
         '''Place ship of size, size, starting at position (x,y) and oriented
         vertically (oreitnation = 0) or horizontally (orientation = 1).'''
@@ -34,16 +54,23 @@ class BattleShip(object):
         is_vertical = bool(ship.ship_ori == "vertical")
 
         # check valid location
-        if len(location) != 2:
-            raise Exception("{} is not in the form x, y.".format(location))
+        try:
+            row, col = location.split(',')
+        except LocationError:
+            raise Exception(f'{location} is not in the form row, col')
 
-        col, row = location
+        row, col = location
 
         # check whether row or col is an integer
-        if type(row) != int:
+        try:
+            row = int(row)
+        except ValueError:
             raise Exception(" {} is not a valid value for row.\n It should be an integer "
                             "between 0 and {}.".format(row, self.nrow - 1))
-        elif type(col) != int:
+
+        try:
+            col = int(col)
+        except ValueError:
             raise Exception(" {} is not a valid value for col.\n It should be an integer "
                             "between 0 and {}.".format(col, self.ncol - 1))
 
@@ -51,13 +78,13 @@ class BattleShip(object):
         if col >= self.ncol or col < 0 or row >= self.nrow or row < 0:
             raise Exception("Cannot place {} {} at {}, {} "
                             "because it would be out of bounds."
-                            .format(ship.ship_name, orientation, col, row))
+                            .format(ship.ship_name, orientation, row, col))
 
         # check The ship is out of bound
         if bool((row + size - 1 > self.nrow) * is_vertical +
                 (col + size - 1 > self.ncol) * (1 - is_vertical)):
             raise Exception("Cannot place {} {} at {}, {} "
-                            "because it would be out of bounds.".format(ship.ship_name, orientation, col, row))
+                            "because it would be out of bounds.".format(ship.ship_name, orientation, row, col))
 
         # Checks to make sure the ship doesn't lie outside the board and that
         # no ships have been placed on those spots.
@@ -79,7 +106,10 @@ class BattleShip(object):
             for y in range(col, col + size):
                 board[row][y] = ship.ship_name[0]
 
-    def load_ships(self):
+        # update the location of the ship
+        ship.ship_loc = location
+
+    def load_all_ships(self):
         for player in self.players:
             for ship in player.ship:
                 orientation = input("Please enter orientation here")
@@ -90,13 +120,22 @@ class BattleShip(object):
 
 
     def ship_fire(self, location):
-        x = input('What is the x-coordinate you wish to fire on? ')
-        y = input('What is the y-coordinate you wish to fire on? ')
+        location = input('Pleas enter the location you wish to fire on: ')
         try:
-            x, y = int(x), int(y)
+            x, y = location.split(',')
+        except ValueError:
+            raise Exception(f'{location} is not in the form row, col')
+
+        try:
+            x = int(x)
             # verifies that x and y are valid integers.
-        except Exception:
-            self.fire()
+        except LocationError:
+            raise Exception(f"Row should be an integer. {x} is NOT an integer")
+
+        try:
+            y = int(y)
+        except LocationError:
+            raise Exception(f)
         self.fire_helper(x, y)
 
     def fire_helper(self, x, y):
@@ -165,28 +204,3 @@ class BattleShip(object):
             the_move.make()
             self.change_turn()
         self.display_the_winner()
-
-    def display_game_state(self) -> None:
-        print(self.board)
-
-    def is_game_over(self):
-        return self.someone_won() or self.tie_game()
-
-    def someone_won(self) -> bool:
-        """
-
-        :return:
-        """
-
-        return self.someone_won_horizontally() or self.someone_won_vertically() or self.someone_won_diagonally()
-
-
-
-
-
-
-
-
-    def get_cur_player(self):
-
-        return self.players[self._cur_player_turn]
