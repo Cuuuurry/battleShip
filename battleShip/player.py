@@ -19,7 +19,6 @@ class Player(object):
     def player_info(self, ):
         self.player_name = input("Player 1 please enter your name: ")
         print("{}'s Placement Board".format(self.player_name))
-        return self.player_name
 
     def load_info(self, ):
         print("{} enter horizontal or vertical for the {} of {} which is {} long: ".format(
