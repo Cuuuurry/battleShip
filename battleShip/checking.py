@@ -78,13 +78,13 @@ class Validation(object):
 
         if not is_vertical:
             for row in range(x, x + ship.ship_size):
-                if board[[row, y]] != '*':
+                if board[[row, y]] != '0':
                     raise Exception("Cannot place {} {} at {},{} because it would end up out of bounds."
                                     .format(ship.ship_name, ship.ship_ori, x, y))
 
         elif is_vertical:
             for col in range(y, y + ship.ship_size):
-                if board[[x, col]] != '*':
+                if board[[x, col]] != '0':
                     raise Exception("Cannot place {} {} at {} {} because it would end up out of bounds."
                                     .format(ship.ship_name, ship.ship_ori, x, y))
 

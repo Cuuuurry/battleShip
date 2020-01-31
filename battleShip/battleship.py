@@ -26,7 +26,8 @@ class BattleShip(object):
         self.cur_opponent = None
         self.ship_size_dict = ship_size_dict
 
-    def ship_dict_loading(self, ship_size_dict):
+    def ship_dict_loading(self, ):
+        ship_size_dict = self.ship_size_dict
         ship_list = []
         for ship_name, ship_size in ship_size_dict.items():
             new_ship = Ship(ship_name, int(ship_size))
@@ -36,15 +37,16 @@ class BattleShip(object):
             self.players.append(new_player)
         self.cur_player, self.cur_opponent = self.players
 
-    def players_register(self):
+    def players_register(self) -> None:
         i = 1
         for player in self.players:
             player.player_info(i)
             player.board = Board(self.num_rows, self.num_cols, blank_char="0")
+            print(player.board)
             player.scan_board = Board(self.num_rows, self.num_cols)
             i += 1
 
-    def load_ship(self, ship: Ship, orientation, location):
+    def load_ship(self, ship: Ship, orientation: str, location: str) -> None:
         '''Place ship of size, size, starting at position (x,y) and oriented
         vertically (oreitnation = 0) or horizontally (orientation = 1).'''
         player = self.cur_player
@@ -77,10 +79,10 @@ class BattleShip(object):
 
         if not is_vertical:
             for col in range(y, y + size):
-                board[x][col] = ship.ship_name[0]
+                board[[x, col]] = ship.ship_name[0]
         elif is_vertical:
             for row in range(x, x + size):
-                board[row][y] = ship.ship_name[0]
+                board[[row, y]] = ship.ship_name[0]
         # update the location of the ship
         ship.ship_located((x, y))
 
@@ -106,7 +108,7 @@ class BattleShip(object):
         ship = player.ship[0]
         test = Validation(player, opponent, ship)
         test.location_length_checking(location)
-        x, y = location
+        x, y = location.split(",")
 
         # location is invalid type
         test.location_type_checking(x, y)
@@ -117,12 +119,13 @@ class BattleShip(object):
             raise LocationError(f'{x}, {y} is not in bounds of our '
                                 f'{player.scan_board.num_rows} X {player.scan_board.num_cols} board')
         # location have already fired
-        elif player.scan_board[x][y] != player.scan_board.blank_char:
+        elif player.scan_board[[x, y]] != player.scan_board.blank_char:
             raise LocationError(f"You have already fired at {x}, {y}")
         else:
-            player.scan_board[[x, y]] = opponent.board[x][y]
+            player.scan_board[[x, y]] = opponent.board[[x, y]]
 
         fire_location = (x, y)
+        miss = True
         for ship in opponent.ship:
             if fire_location in ship.ship_loc:
                 player.fire_on_target(opponent.player_name, ship)
@@ -130,18 +133,22 @@ class BattleShip(object):
                 if ship.ship_destroyed():
                     player.ship_status(opponent.player_name, ship)
                 player.player_health_change()
-            else:
-                player.fire_miss()
+                miss = False
+        if miss:
+            player.fire_miss()
 
     def change_turn(self):
         self.cur_player, self.cur_opponent = self.cur_opponent, self.cur_player
 
     def display_game_stat(self):
+        cur_player = self.cur_player
+        print(cur_player.board)
+        print(cur_player.scan_board)
 
 
     def is_game_over(self):
         cur_opponent = self.cur_opponent
-        if not cur_opponent.health:
+        if not cur_opponent.player_health:
             return True
         else:
             return False
@@ -157,7 +164,7 @@ class BattleShip(object):
         :return:
         """
         # setups
-        self.ship_dict_loading(self.ship_size_dict)
+        self.ship_dict_loading()
         self.players_register()
         self.load_all_ships()
         self.initial_all_stats()
@@ -165,6 +172,15 @@ class BattleShip(object):
         self.ship_fire()
         while not self.is_game_over():
             self.change_turn()
-            self.display_game_state()
+            self.display_game_stat()
             self.ship_fire()
+            print(self.cur_player.board)
         self.display_the_winner()
+
+
+if __name__ == "__main__":
+    ship_dict = {"P": 3, "U":2}
+    battle = BattleShip(9, 9, ship_dict)
+    battle.play()
+    print(self.cur_player.name)
+    print(self.cur_opponent.name)
