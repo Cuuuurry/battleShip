@@ -49,20 +49,16 @@ class Validation(object):
         """
         board = self.player.board
         while True:
-            try:
-                type(x) == int
-            except ValueError:
+            if x != int(x):
                 print(" {} is not a valid value for row.\n It should be an integer "
-                      "between 0 and {}.\n Please enter row again".format(x, board.num_rows - 1))
-            else:
-                break
+                      "between 0 and {}.".format(x, board.num_rows - 1))
+                x = input("Please enter row again: ")
 
-        while True:
-            try:
-                type(y) == int
-            except ValueError:
+            elif y != int(y):
                 print(" {} is not a valid value for col.\n It should be an integer "
                       "between 0 and {}.".format(y, board.num_cols - 1))
+                y = input("Please enter row again: ")
+
             else:
                 break
 
@@ -77,9 +73,7 @@ class Validation(object):
         board = player.scan_board
         opponent = self.opponent
         while True:
-            try:
-                board.is_in_bounds(x, y)
-            except LocationError:
+            if board.is_in_bounds(x, y) is not True:
                 print(f'{x}, {y} is not in bounds of our '
                       f'{board.num_rows} X {board.num_cols} board')
             else:
@@ -92,9 +86,8 @@ class Validation(object):
             except LocationError:
                 print(f"You have already fired at {x}, {y}")
             else:
+                board[[x, y]] = opponent.board[x][y]
                 break
-
-            board[[x, y]] = opponent.board[x][y]
 
     def coordinate_in_board_checking(self, x, y):
         # check the coordinate is valid or not
