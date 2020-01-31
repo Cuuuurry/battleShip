@@ -59,3 +59,6 @@ while ship_loc is None:
         raise Exception(f"Cannot place {ship_name} {orientation}ly at col, row: {col}, {row} "
                         "because it would be out of bounds."
                         )
+
+
+
