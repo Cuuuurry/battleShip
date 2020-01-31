@@ -79,14 +79,29 @@ from sys import argv
 from battleship import BattleShip
 
 
-ship_list = []
 ship_size_dict = {}
 with open(argv[1], "r") as f:
     for i, line in enumerate(f):
         ship_size_dict[line.split()[0]] = line.split()[1]
 
+#print(ship_size_dict)
 test = BattleShip(9, 9)
+#print(test.num_rows)
+#print(test.num_cols)
+#print(test.players)
+#print(test.cur_player)
+#print(test.cur_opponent)
+
 test.ship_dict_loading(ship_size_dict)
+test.players_register()
+
+#print(test.players)
+#print(test.cur_player.ship[1].ship_name)
+#print(test.cur_opponent)
+test.load_all_ships()
+
+print("Successfully import classes")
+
 
 
 
