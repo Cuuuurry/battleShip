@@ -3,26 +3,15 @@ This File:
     Class battleShip for game process
 
 """
-
-from typing import Iterable, TypeVar
+from sys import argv
+from typing import Iterable, TypeVar, Tuple
 from board import Board
+from checking import LocationError, Validation
 from player import Player
 from ship import Ship
 print("Successfully import classes")
 
-class LocationError(Exception):
-    def __init__(self, reason: str) -> None:
-        self.reason = reason
 
-    def __str__(self) -> str:
-        return self.reason
-
-class Orientation(Exception):
-    def __init__(self, reason: str) -> None:
-        self.reason = reason
-
-    def __str__(self) -> str:
-        return self.reason
 
 
 class BattleShip(object):
@@ -31,21 +20,32 @@ class BattleShip(object):
         Two players
         Four boards: two initial boards (static), two scan boards (dynamic)
     """
-    def __init__(self, nrow, ncol) -> None:
-        self.nrow = nrow
-        self.ncol = ncol
+    def __init__(self, num_rows, num_cols) -> None:
+        self.num_rows = num_rows
+        self.num_cols = num_cols
         self.players = [Player() for _ in range(2)]
         self.cur_player_turn = 0
+        self.cur_player, self.cur_opponent = self.players
+
+    def ship_dict_loading(self, ship_size_dict):
+        ship_list = []
+        for ship_name, ship_size in ship_size_dict.items():
+            new_ship = Ship(ship_name, ship_size)
+            ship_list.append(new_ship)
+        for player in self.players:
+            player.ship = ship_list
 
     def players_register(self):
         for player in self.players:
             player.player_info()
-            player.board = Board(self.nrow, self.ncol)
-            player.scan_board = Board(self.nrow, self.ncol)
+            player.board = Board(self.num_rows, self.num_cols, blank_char="0")
+            player.scan_board = Board(self.num_rows, self.num_cols)
 
-    def load_ship(self, ship: Ship, player: Player, orientation, location):
+    def load_ship(self, ship: Ship, orientation, location):
         '''Place ship of size, size, starting at position (x,y) and oriented
         vertically (oreitnation = 0) or horizontally (orientation = 1).'''
+        player = self.cur_player
+        opponent = self.cur_opponent
         board = player.board
         size = ship.ship_size
 
@@ -54,141 +54,79 @@ class BattleShip(object):
         is_vertical = bool(ship.ship_ori == "vertical")
 
         # check valid location
-        try:
-            row, col = location.split(',')
-        except LocationError:
-            raise Exception(f'{location} is not in the form row, col')
-
-        row, col = location
+        test = Validation(player, opponent, ship)
+        test.location_length_checking(location)
+        x, y = location.split(',')
 
         # check whether row or col is an integer
-        try:
-            row = int(row)
-        except ValueError:
-            raise Exception(" {} is not a valid value for row.\n It should be an integer "
-                            "between 0 and {}.".format(row, self.nrow - 1))
-
-        try:
-            col = int(col)
-        except ValueError:
-            raise Exception(" {} is not a valid value for col.\n It should be an integer "
-                            "between 0 and {}.".format(col, self.ncol - 1))
+        test.location_type_checking(x, y)
+        x, y = int(x), int(y)
 
         # check the coordinate is valid or not
-        if col >= self.ncol or col < 0 or row >= self.nrow or row < 0:
-            raise Exception("Cannot place {} {} at {}, {} "
-                            "because it would be out of bounds."
-                            .format(ship.ship_name, orientation, row, col))
+        test.coordinate_in_board_checking(x, y)
 
         # check The ship is out of bound
-        if bool((row + size - 1 > self.nrow) * is_vertical +
-                (col + size - 1 > self.ncol) * (1 - is_vertical)):
-            raise Exception("Cannot place {} {} at {}, {} "
-                            "because it would be out of bounds.".format(ship.ship_name, orientation, row, col))
+        test.ship_place_in_board_checking(x, y, is_vertical)
 
         # Checks to make sure the ship doesn't lie outside the board and that
         # no ships have been placed on those spots.
-        if not is_vertical:
-            for x in range(row, row + size):
-                if board[x][col] != '*':
-                    raise Exception("Cannot place {} {} at {},{} because it would end up out of bounds."
-                                    .format(ship.ship_name, orientation, row, col))
-        elif is_vertical:
-            for y in range(col, col + size):
-                if board[row][y] != '*':
-                    raise Exception("Cannot place {} {} at {} {} because it would end up out of bounds."
-                                    .format(ship.ship_name, orientation, row, col))
+        test.ship_place_conflict_checking(x, y, is_vertical)
 
         if not is_vertical:
-            for x in range(row, row + size):
+            for col in range(y, y + size):
                 board[x][col] = ship.ship_name[0]
         elif is_vertical:
-            for y in range(col, col + size):
+            for row in range(x, x + size):
                 board[row][y] = ship.ship_name[0]
-
         # update the location of the ship
-        ship.ship_loc = location
+        ship.ship_located((x, y))
 
     def load_all_ships(self):
-        for player in self.players:
+        for i in range(2):
+            player = self.cur_player
             for ship in player.ship:
                 orientation = input("Please enter orientation here")
                 location = input("Please enter location here")
-                self.load_ship(ship, player, orientation, location)
+                self.load_ship(ship, orientation, location)
+            self.change_turn()
 
-
-
-
-    def ship_fire(self, location):
+    def ship_fire(self):
         location = input('Pleas enter the location you wish to fire on: ')
-        try:
-            x, y = location.split(',')
-        except ValueError:
-            raise Exception(f'{location} is not in the form row, col')
+        # location is not in the right length
+        player = self.cur_player
+        opponent = self.cur_opponent
+        ship = player.ship[0]
+        test = Validation(player, opponent, ship)
+        test.location_length_checking(location)
+        x, y = location
 
-        try:
-            x = int(x)
-            # verifies that x and y are valid integers.
-        except LocationError:
-            raise Exception(f"Row should be an integer. {x} is NOT an integer")
+        # location is invalid type
+        test.location_type_checking(x, y)
+        x, y = int(x), int(y)
 
-        try:
-            y = int(y)
-        except LocationError:
-            raise Exception(f)
-        self.fire_helper(x, y)
-
-    def fire_helper(self, x, y):
-        '''Fires at coordinates (x,y) on opponent'''
-
-        if x > self.size or y > self.size:
-            # Checks to make sure that x and y and in the scope of the board.
-            print
-            'Out of bounds'
-            self.fire()
-        elif self.opponents_board.get((x, y)) != '?':
-            # Checks if the current spot has been chosen.
-            print
-            'That coordinate has been fired already'
-            self.fire()
-        elif (self.opponent.board.get((x, y)) == '.' or
-              self.opponent.board.get((x, y)) == 'x'):
-            # The player has hit an s and missed.
-            print
-            'Target missed'
-            self.opponents_board[(x, y)] = 'x'
-            self.opponent.board[(x, y)] = 'x'
+        # location is out of bound
+        if not player.scan_board.is_in_bounds(x, y):
+            raise LocationError(f'{x}, {y} is not in bounds of our '
+                                f'{player.scan_board.num_rows} X {player.scan_board.num_cols} board')
+        # location have already fired
+        elif player.scan_board[x][y] != player.scan_board.blank_char:
+            raise LocationError(f"You have already fired at {x}, {y}")
         else:
-            # A player's ship has been hit! Mark it on the board.
-            ship_name_list = ['Destroyer', 'Frigate', 'Battleship', 'Carrier']
+            player.scan_board[[x, y]] = opponent.board[x][y]
 
-            print("Hit enemy's " + \
-                  ship_name_list[self.opponent.board.get((x, y)) - 2])
-            self.score -= 1
-            self.opponents_board[(x, y)] = \
-                self.opponent.board.get((x, y))
-            self.opponent.board[(x, y)] = 'x'
+    def battle_news(self, fire_location: Tuple[int]):
+        #check ships:
+        player = self.cur_player
+        opponent = self.cur_opponent
+        for ship in opponent.ship:
+            if fire_location in ship.ship_loc:
+                ship.ship_health_change()
+                ship.ship_destroyed()
+            else:
+                player.fire_miss()
 
     def change_turn(self):
-        input(self.name + ''''s turn''' + ' push enter to continue')
-        if not self.human and self.opponent.human:
-            pass
-        else:
-            print
-            'Your board:'
-            self.print_map(True)
-            print
-            '''Your view of your opponent's board:'''
-            self.print_map(False)
-            # Print your view of the opponents map.
-        self.fire()
-        for n in range(20):
-            print('')
-        self._cur_player_turn = (self._cur_player_turn + 1) % 2
-        if self._cur_player_turn == 0:
-            self._cur_player_turn = 1
-        else:
-            self._cur_player_turn = 0
+        self.cur_player, self.cur_opponent = self.cur_opponent, self.cur_player
 
     def play(self) -> None:
         """

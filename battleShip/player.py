@@ -12,9 +12,18 @@ class Player(object):
         self.ship = ship_list  # list[ship]
         self.board = None
         self.scan_board = None
+        self.player_health = 0
 
     def __str__(self) -> str:
         return self.player_name
+
+    def player_health_initializer(self, ):
+        for ship in self.ship:
+            self.player_health += ship.ship_health
+        return self.player_health
+
+    def player_health_change(self, ):
+        self.player_health -= 1
 
     def player_info(self, ):
         self.player_name = input("Player 1 please enter your name: ")

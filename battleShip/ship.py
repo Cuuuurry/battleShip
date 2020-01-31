@@ -4,9 +4,7 @@ This File:
         Count the fire
 """
 
-from typing import List
-
-# for ship in ship
+from typing import List, Tuple
 
 
 class Ship(object):
@@ -14,7 +12,7 @@ class Ship(object):
         self.ship_name = ship_name
         self.ship_size = ship_size
         self.ship_ori = None
-        self.ship_loc = None
+        self.ship_loc = set()
         self.ship_health = ship_size
 
     def ship_oriented(self, orientation: str):
@@ -29,8 +27,12 @@ class Ship(object):
         else:
             raise Exception("{} does not represent an Orientation".format(orientation))
 
-    def ship_located(self, location: List[int]):
-        self.ship_loc = location
+    def ship_located(self, location: Tuple[int]):
+        self.ship_loc = set()
+        self.ship_loc.add(location)
+        index_dynamic = int(self.ship_ori == "horizontal")
+        for i in range(self.ship_size):
+            self.ship_loc.add(location[index_dynamic])
 
     def ship_health_change(self):
         self.ship_health -= 1

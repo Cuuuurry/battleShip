@@ -42,3 +42,5 @@ class Board(object):
 if __name__ == "__main__":
     board_case = Board(13, 13)
     print(board_case)
+    board_case[[1,2]] = "P"
+    print(board_case)
