@@ -45,3 +45,4 @@ if __name__ == "__main__":
     board_case[[1,2]] = "P"
     print(board_case)
     print(board_case[[0,1]])
+    print(board_case.is_in_bounds(13, 0))

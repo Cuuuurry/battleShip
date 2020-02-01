@@ -41,7 +41,7 @@ class BattleShip(object):
         i = 1
         for player in self.players:
             player.player_info(i)
-            player.board = Board(self.num_rows, self.num_cols, blank_char="0")
+            player.board = Board(self.num_rows, self.num_cols)
             print(player.board)
             player.scan_board = Board(self.num_rows, self.num_cols)
             i += 1
@@ -62,12 +62,14 @@ class BattleShip(object):
         is_vertical = bool(ship.ship_ori == "vertical")
 
         location = input("Please enter location here: ")
+
+        ready_to_break = False
         # check valid location
-        while True:
+        while not ready_to_break:
             ready_to_break = True
             if ready_to_break:
                 if not test.location_length_checking(location):
-                    location = input("Please ")
+                    location = input("Please 1")
                     ready_to_break = False
                 else:
                     x, y = location.split(',')
@@ -75,7 +77,7 @@ class BattleShip(object):
         # check whether row or col is an integer
             if ready_to_break:
                 if not test.location_type_checking(x, y):
-                    location = input("Please")
+                    location = input("Please 2")
                     ready_to_break = False
                 else:
                     x, y = int(x), int(y)
@@ -83,24 +85,21 @@ class BattleShip(object):
         # check the coordinate is valid or not
             if ready_to_break:
                 if not test.coordinate_in_board_checking(x, y):
-                    location = input("Please")
+                    location = input("Please 3")
                     ready_to_break = False
 
         # check The ship is out of bound
             if ready_to_break:
                 if not test.ship_place_in_board_checking(x, y, is_vertical):
-                    location = input("Please")
+                    location = input("Please 4")
                     ready_to_break = False
 
         # Checks to make sure the ship doesn't lie outside the board and that
         # no ships have been placed on those spots.
             if ready_to_break:
                 if not test.ship_place_conflict_checking(x, y, is_vertical):
-                    location = input("Please")
+                    location = input("Please 5")
                     ready_to_break = False
-
-            if ready_to_break:
-                break
 
         if not is_vertical:
             for col in range(y, y + size):
