@@ -139,6 +139,7 @@ class BattleShip(object):
             if ready_to_break:
                 if not test.location_length_checking(location):
                     location = input("please enter a new location")
+                    ready_to_break = False
                 else:
                     x, y = location.split(",")
             print("process 1 finished")
@@ -147,6 +148,7 @@ class BattleShip(object):
             if ready_to_break:
                 if not test.location_type_checking(x, y):
                     location = input("please enter a new location")
+                    ready_to_break = False
                 else:
                     x, y = int(x), int(y)
             print("process 2 finished")
@@ -155,6 +157,7 @@ class BattleShip(object):
             if ready_to_break:
                 if not test.location_fire_checking(x, y):
                     location = input("please enter a new location")
+                    ready_to_break = False
             print("process 3 finished")
 
             player.scan_board[[x, y]] = opponent.board[[x, y]]
@@ -167,7 +170,7 @@ class BattleShip(object):
                 ship.ship_health_change()
                 if ship.ship_destroyed():
                     player.ship_status(opponent.player_name, ship)
-                player.player_health_change()
+                opponent.player_health_change()
                 miss = False
         if miss:
             player.fire_miss()
@@ -181,12 +184,13 @@ class BattleShip(object):
         print(cur_player.board)
         print(cur_player.scan_board)
 
-
     def is_game_over(self):
         cur_opponent = self.cur_opponent
-        if not cur_opponent.player_health:
+        if cur_opponent.player_health == 0:
+            print("died")
             return True
         else:
+            print("still alive")
             return False
 
     def display_the_winner(self):
@@ -204,17 +208,27 @@ class BattleShip(object):
         self.players_register()
         self.load_all_ships()
         self.initial_all_stats()
+        print(f"{self.cur_player.player_name} health is {self.cur_player.player_health}")
+        print(f"{self.cur_opponent.player_name} health is {self.cur_opponent.player_health}")
         self.display_game_stat()
         self.ship_fire()
+        print(self.cur_player.board)
+        print(f"{self.cur_player.player_name} health is {self.cur_player.player_health}")
+        print(f"{self.cur_opponent.player_name} health is {self.cur_opponent.player_health}")
         while not self.is_game_over():
             self.change_turn()
             self.display_game_stat()
             self.ship_fire()
             print(self.cur_player.board)
+            print(f"{self.cur_player.player_name} health is {self.cur_player.player_health}")
+            print(f"{self.cur_opponent.player_name} health is {self.cur_opponent.player_health}")
         self.display_the_winner()
 
 
 if __name__ == "__main__":
-    ship_dict = {"P": 2, "U": 3}
+    """ship_dict = {"P": 2, "U": 3}
     battle = BattleShip(9, 9, ship_dict)
+    battle.play()"""
+    ship_dict = {"P": 1}
+    battle = BattleShip(3, 3, ship_dict)
     battle.play()
