@@ -208,6 +208,6 @@ class BattleShip(object):
 
 
 if __name__ == "__main__":
-    ship_dict = {"P": 3, "U":2}
+    ship_dict = {"P": 2, "U": 3}
     battle = BattleShip(9, 9, ship_dict)
     battle.play()

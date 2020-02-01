@@ -113,17 +113,19 @@ class Validation(object):
         if not is_vertical:
             for row in range(x, x + ship.ship_size):
                 if board[[row, y]] != '*':
-                    print("Cannot place {} {} at {},{} because it would end up out of bounds."
+                    print("Cannot place {} {} at {},{} because it has conflicts."
                           .format(ship.ship_name, ship.ship_ori, x, y))
                     flag = False
+                    break
                 else:
                     flag = True
         elif is_vertical:
             for col in range(y, y + ship.ship_size):
                 if board[[x, col]] != '*':
-                    print("Cannot place {} {} at {} {} because it would end up out of bounds."
+                    print("Cannot place {} {} at {} {} because it has conflicts."
                           .format(ship.ship_name, ship.ship_ori, x, y))
                     flag = False
+                    break
                 else:
                     flag = True
         return flag
