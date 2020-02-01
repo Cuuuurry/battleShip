@@ -87,6 +87,8 @@ class BattleShip(object):
             if not test.ship_place_conflict_checking(x, y, is_vertical):
                 location = input("Please")
                 pass
+            
+            break
 
         if not is_vertical:
             for col in range(y, y + size):
