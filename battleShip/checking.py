@@ -8,12 +8,13 @@ class Validation(object):
         self.opponent = opponent
         self.ship = ship
 
-    def location_type_checking(self, x, y, flag = False):
+    def location_type_checking(self, x, y, flag=False):
         """
         check whether row or col is an integer
         :param x: row
         :param y: col
-        :return: checking info: ValueError
+        :param flag
+        :return: bool
         """
         board = self.player.board
         try:
@@ -34,49 +35,75 @@ class Validation(object):
 
         return flag
 
-    def location_fire_checking(self, x, y):
+    def location_fire_checking(self, x, y, flag=False):
         """
-
-        :param x:
-        :param y:
-        :return:
+        check fire location at board
+        :param x: row
+        :param y: col
+        :param flag
+        :return: bool
         """
         player = self.player
         board = player.scan_board
         opponent = self.opponent
-        if board.is_in_bounds(x, y) is not True:
+        if not board.is_in_bounds(x, y):
             print(f'{x}, {y} is not in bounds of our '
                   f'{board.num_rows} X {board.num_cols} board')
-
-        elif board[x][y] != board.blank_char:
-            print(f"You have already fired at {x}, {y}")
-
         else:
-            board[[x, y]] = opponent.board[x][y]
-            pass
+            flag = True
+
+        if board[[x, y]] != board.blank_char:
+            print(f"You have already fired at {x}, {y}")
+        else:
+            flag = True and flag
+
+        return flag
 
     def coordinate_in_board_checking(self, x, y):
+        """
+        check coordinate in board
+        :param x: row
+        :param y: col
+        :return: bool
+        """
         # check the coordinate is valid or not
         board = self.player.board
         ship = self.ship
-        if board.is_in_bounds(x, y) is not True:
+        if not board.is_in_bounds(x, y):
             print("Cannot place {} {} at {}, {} "
                   "because it would be out of bounds."
                   .format(ship.ship_name, ship.ship_ori, x, y))
-        else:
-            pass
-
-    def ship_place_in_board_checking(self, x, y, is_vertical: bool):
-        board = self.player.board
-        ship = self.ship
-        if bool((x + ship.ship_size - 1 > board.num_rows) * is_vertical +
-                (y + ship.ship_size - 1 > board.num_cols) * (1 - is_vertical)) is not True:
-            print("Cannot place {} {} at {}, {} "
-                  "because it would be out of bounds.".format(ship.ship_name, ship.ship_ori, x, y))
+            return False
         else:
             return True
 
-    def ship_place_conflict_checking(self, x, y, is_vertical: bool):
+    def ship_place_in_board_checking(self, x, y, is_vertical: bool):
+        """
+        check ship place in board
+        :param x: row
+        :param y: col
+        :param is_vertical: bool
+        :return: bool
+        """
+        board = self.player.board
+        ship = self.ship
+        if not bool((x + ship.ship_size - 1 > board.num_rows) * is_vertical +
+                (y + ship.ship_size - 1 > board.num_cols) * (1 - is_vertical)):
+            print("Cannot place {} {} at {}, {} "
+                  "because it would be out of bounds.".format(ship.ship_name, ship.ship_ori, x, y))
+            return False
+        else:
+            return True
+
+    def ship_place_conflict_checking(self, x, y, is_vertical: bool, flag=False):
+        """
+        check ship_place_conflict
+        :param x: row
+        :param y: col
+        :param is_vertical: bool
+        :param flag:
+        :return: bool
+        """
         board = self.player.board
         ship = self.ship
         if not is_vertical:
@@ -84,22 +111,24 @@ class Validation(object):
                 if board[[row, y]] != '0':
                     print("Cannot place {} {} at {},{} because it would end up out of bounds."
                           .format(ship.ship_name, ship.ship_ori, x, y))
+                else:
+                    flag = True
 
         elif is_vertical:
             for col in range(y, y + ship.ship_size):
                 if board[[x, col]] != '0':
                     print("Cannot place {} {} at {} {} because it would end up out of bounds."
                           .format(ship.ship_name, ship.ship_ori, x, y))
-                    return False
                 else:
-                    return True
+                    flag = True and flag
+        return flag
 
     @staticmethod
     def location_length_checking(location):
         """
-
-        :param location:
-        :return:
+        check length of input location
+        :param location: ""
+        :return: bool
         """
         # check valid location
         try:
