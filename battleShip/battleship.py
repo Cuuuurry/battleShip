@@ -116,6 +116,7 @@ class BattleShip(object):
             player = self.cur_player
             for ship in player.ship:
                 self.load_ship(ship)
+                print(player.board)
             self.change_turn()
 
     def initial_all_stats(self):
@@ -165,6 +166,7 @@ class BattleShip(object):
             player.fire_miss()
 
     def change_turn(self):
+        print("Turn has been changed now")
         self.cur_player, self.cur_opponent = self.cur_opponent, self.cur_player
 
     def display_game_stat(self):
