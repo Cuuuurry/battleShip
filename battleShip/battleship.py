@@ -6,7 +6,7 @@ This File:
 from sys import argv
 from typing import Iterable, TypeVar, Tuple
 from board import Board
-from checking import LocationError, Validation
+from checking import Validation
 from player import Player
 from ship import Ship
 print("Successfully import classes")
@@ -46,7 +46,7 @@ class BattleShip(object):
             player.scan_board = Board(self.num_rows, self.num_cols)
             i += 1
 
-    def load_ship(self, ship: Ship, orientation: str, location: str) -> None:
+    def load_ship(self, ship: Ship) -> None:
         '''Place ship of size, size, starting at position (x,y) and oriented
         vertically (oreitnation = 0) or horizontally (orientation = 1).'''
         player = self.cur_player
@@ -55,10 +55,13 @@ class BattleShip(object):
         size = ship.ship_size
         test = Validation(player, opponent, ship)
 
+        orientation = input("Please enter orientation here: ")
+
         # check orientation validation and orientation setting
         ship.ship_oriented(orientation)
         is_vertical = bool(ship.ship_ori == "vertical")
 
+        location = input("Please enter location here: ")
         # check valid location
         while True:
             if not test.location_length_checking(location):
@@ -87,7 +90,7 @@ class BattleShip(object):
             if not test.ship_place_conflict_checking(x, y, is_vertical):
                 location = input("Please")
                 pass
-            
+
             break
 
         if not is_vertical:
@@ -96,6 +99,7 @@ class BattleShip(object):
         elif is_vertical:
             for row in range(x, x + size):
                 board[[row, y]] = ship.ship_name[0]
+
         # update the location of the ship
         ship.ship_located((x, y))
 
@@ -103,9 +107,7 @@ class BattleShip(object):
         for i in range(2):
             player = self.cur_player
             for ship in player.ship:
-                orientation = input("Please enter orientation here: ")
-                location = input("Please enter location here: ")
-                self.load_ship(ship, orientation, location)
+                self.load_ship(ship)
             self.change_turn()
 
     def initial_all_stats(self):
