@@ -52,3 +52,4 @@ class Ship(object):
 if __name__ == '__main__':
     S1 = Ship("monkey", 3)
     S1.ship_oriented("v ")
+    print(S1.ship_ori)

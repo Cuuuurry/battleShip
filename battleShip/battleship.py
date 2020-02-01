@@ -53,29 +53,40 @@ class BattleShip(object):
         opponent = self.cur_opponent
         board = player.board
         size = ship.ship_size
+        test = Validation(player, opponent, ship)
 
         # check orientation validation and orientation setting
         ship.ship_oriented(orientation)
         is_vertical = bool(ship.ship_ori == "vertical")
 
         # check valid location
-        test = Validation(player, opponent, ship)
-        test.location_length_checking(location)
-        x, y = location.split(',')
+        while True:
+            if not test.location_length_checking(location):
+                location = input("Please ")
+                pass
+            x, y = location.split(',')
 
         # check whether row or col is an integer
-        test.location_type_checking(x, y)
-        x, y = int(x), int(y)
+            if not test.location_type_checking(x, y):
+                location = input("Please")
+                pass
+            x, y = int(x), int(y)
 
         # check the coordinate is valid or not
-        test.coordinate_in_board_checking(x, y)
+            if not test.coordinate_in_board_checking(x, y):
+                location = input("Please")
+                pass
 
         # check The ship is out of bound
-        test.ship_place_in_board_checking(x, y, is_vertical)
+            if not test.ship_place_in_board_checking(x, y, is_vertical):
+                location = input("Please")
+                pass
 
         # Checks to make sure the ship doesn't lie outside the board and that
         # no ships have been placed on those spots.
-        test.ship_place_conflict_checking(x, y, is_vertical)
+            if not test.ship_place_conflict_checking(x, y, is_vertical):
+                location = input("Please")
+                pass
 
         if not is_vertical:
             for col in range(y, y + size):
@@ -102,26 +113,30 @@ class BattleShip(object):
 
     def ship_fire(self):
         location = input('Pleas enter the location you wish to fire on: ')
-        # location is not in the right length
+
         player = self.cur_player
         opponent = self.cur_opponent
         ship = player.ship[0]
         test = Validation(player, opponent, ship)
-        test.location_length_checking(location)
-        x, y = location.split(",")
 
-        # location is invalid type
-        test.location_type_checking(x, y)
-        x, y = int(x), int(y)
+        while True:
+            # location is not in the right length
+            if not test.location_length_checking(location):
+                location = input("please enter a new location")
+                pass
+            x, y = location.split(",")
 
-        # location is out of bound
-        if not player.scan_board.is_in_bounds(x, y):
-            raise LocationError(f'{x}, {y} is not in bounds of our '
-                                f'{player.scan_board.num_rows} X {player.scan_board.num_cols} board')
-        # location have already fired
-        elif player.scan_board[[x, y]] != player.scan_board.blank_char:
-            raise LocationError(f"You have already fired at {x}, {y}")
-        else:
+            # location is invalid type
+            if not test.location_type_checking(x, y):
+                location = input("please enter a new location")
+                pass
+            x, y = int(x), int(y)
+
+            # location is out of bound
+            if not test.location_fire_checking(x, y):
+                location = input("please enter a new location")
+                pass
+
             player.scan_board[[x, y]] = opponent.board[[x, y]]
 
         fire_location = (x, y)
