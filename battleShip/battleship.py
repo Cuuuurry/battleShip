@@ -69,14 +69,16 @@ class BattleShip(object):
                 if not test.location_length_checking(location):
                     location = input("Please ")
                     ready_to_break = False
-                x, y = location.split(',')
+                else:
+                    x, y = location.split(',')
 
         # check whether row or col is an integer
             if ready_to_break:
                 if not test.location_type_checking(x, y):
                     location = input("Please")
                     ready_to_break = False
-                x, y = int(x), int(y)
+                else:
+                    x, y = int(x), int(y)
 
         # check the coordinate is valid or not
             if ready_to_break:
@@ -96,7 +98,7 @@ class BattleShip(object):
                 if not test.ship_place_conflict_checking(x, y, is_vertical):
                     location = input("Please")
                     ready_to_break = False
-                    
+
             if ready_to_break:
                 break
 
