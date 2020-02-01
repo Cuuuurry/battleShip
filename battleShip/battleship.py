@@ -132,23 +132,30 @@ class BattleShip(object):
         ship = player.ship[0]
         test = Validation(player, opponent, ship)
 
-        while True:
+        ready_to_break = False
+        while not ready_to_break:
+            ready_to_break = True
             # location is not in the right length
-            if not test.location_length_checking(location):
-                location = input("please enter a new location")
-                pass
-            x, y = location.split(",")
+            if ready_to_break:
+                if not test.location_length_checking(location):
+                    location = input("please enter a new location")
+                else:
+                    x, y = location.split(",")
+            print("process 1 finished")
 
             # location is invalid type
-            if not test.location_type_checking(x, y):
-                location = input("please enter a new location")
-                pass
-            x, y = int(x), int(y)
+            if ready_to_break:
+                if not test.location_type_checking(x, y):
+                    location = input("please enter a new location")
+                else:
+                    x, y = int(x), int(y)
+            print("process 2 finished")
 
             # location is out of bound
-            if not test.location_fire_checking(x, y):
-                location = input("please enter a new location")
-                pass
+            if ready_to_break:
+                if not test.location_fire_checking(x, y):
+                    location = input("please enter a new location")
+            print("process 3 finished")
 
             player.scan_board[[x, y]] = opponent.board[[x, y]]
 
