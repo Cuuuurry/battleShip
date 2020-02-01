@@ -91,8 +91,8 @@ class Validation(object):
         """
         board = self.player.board
         ship = self.ship
-        if bool((x + ship.ship_size - 1 > board.num_rows) * is_vertical +
-                (y + ship.ship_size - 1 > board.num_cols) * (1 - is_vertical)):
+        if bool((x + ship.ship_size > board.num_rows) * is_vertical +
+                (y + ship.ship_size > board.num_cols) * (1 - is_vertical)):
             print("Cannot place {} {} at {}, {} "
                   "because it would be out of bounds.".format(ship.ship_name, ship.ship_ori, x, y))
             return False
