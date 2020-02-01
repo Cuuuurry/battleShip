@@ -8,7 +8,7 @@ class Validation(object):
         self.opponent = opponent
         self.ship = ship
 
-    def location_type_checking(self, x, y):
+    def location_type_checking(self, x, y, flag = False):
         """
         check whether row or col is an integer
         :param x: row
@@ -16,16 +16,23 @@ class Validation(object):
         :return: checking info: ValueError
         """
         board = self.player.board
-        if x != int(x):
+        try:
+            x = int(x)
+        except ValueError:
             print(" {} is not a valid value for row.\n It should be an integer "
                   "between 0 and {}.".format(x, board.num_rows - 1))
+        else:
+            flag = True
 
-        elif y != int(y):
+        try:
+            y = int(y)
+        except ValueError:
             print(" {} is not a valid value for col.\n It should be an integer "
                   "between 0 and {}.".format(y, board.num_cols - 1))
         else:
-            pass
-        return x != int(x) or y != int(y)
+            flag = True and flag
+
+        return flag
 
     def location_fire_checking(self, x, y):
         """
@@ -83,6 +90,7 @@ class Validation(object):
                 if board[[x, col]] != '0':
                     print("Cannot place {} {} at {} {} because it would end up out of bounds."
                           .format(ship.ship_name, ship.ship_ori, x, y))
+                    return False
                 else:
                     return True
 
