@@ -22,6 +22,7 @@ class Validation(object):
         except ValueError:
             print(" {} is not a valid value for row.\n It should be an integer "
                   "between 0 and {}.".format(x, board.num_rows - 1))
+            flag = False
         else:
             flag = True
 
@@ -30,6 +31,7 @@ class Validation(object):
         except ValueError:
             print(" {} is not a valid value for col.\n It should be an integer "
                   "between 0 and {}.".format(y, board.num_cols - 1))
+            flag = False
         else:
             flag = True and flag
 
@@ -49,11 +51,13 @@ class Validation(object):
         if not board.is_in_bounds(x, y):
             print(f'{x}, {y} is not in bounds of our '
                   f'{board.num_rows} X {board.num_cols} board')
+            flag = False
         else:
             flag = True
 
         if board[[x, y]] != board.blank_char:
             print(f"You have already fired at {x}, {y}")
+            flag = False
         else:
             flag = True and flag
 
