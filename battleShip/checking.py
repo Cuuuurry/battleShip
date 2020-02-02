@@ -1,11 +1,10 @@
-from player import Player
+from board import Board
 from ship import Ship
 
 
 class Validation(object):
-    def __init__(self, player: Player, opponent: Player, ship: Ship):
-        self.player = player
-        self.opponent = opponent
+    def __init__(self, board: Board, ship: Ship):
+        self.board = board
         self.ship = ship
 
     def location_type_checking(self, x, y, flag=False):
@@ -16,7 +15,7 @@ class Validation(object):
         :param flag
         :return: bool
         """
-        board = self.player.board
+        board = self.board
         try:
             x = int(x)
         except ValueError:
@@ -37,32 +36,6 @@ class Validation(object):
 
         return flag
 
-    def location_fire_checking(self, x, y, flag=False):
-        """
-        check fire location at board
-        :param x: row
-        :param y: col
-        :param flag
-        :return: bool
-        """
-        player = self.player
-        board = player.scan_board
-        opponent = self.opponent
-        if not board.is_in_bounds(x, y):
-            print(f'{x}, {y} is not in bounds of our '
-                  f'{board.num_rows} X {board.num_cols} board')
-            flag = False
-        else:
-            flag = True
-
-        if board[[x, y]] != board.blank_char:
-            print(f"You have already fired at {x}, {y}")
-            flag = False
-        else:
-            flag = True and flag
-
-        return flag
-
     def coordinate_in_board_checking(self, x, y):
         """
         check coordinate in board
@@ -71,7 +44,7 @@ class Validation(object):
         :return: bool
         """
         # check the coordinate is valid or not
-        board = self.player.board
+        board = self.board
         ship = self.ship
         if not board.is_in_bounds(x, y):
             print("Cannot place {} {} at {}, {} "
@@ -89,7 +62,7 @@ class Validation(object):
         :param is_vertical: bool
         :return: bool
         """
-        board = self.player.board
+        board = self.board
         ship = self.ship
         if bool((x + ship.ship_size > board.num_rows) * is_vertical +
                 (y + ship.ship_size > board.num_cols) * (1 - is_vertical)):
@@ -108,7 +81,7 @@ class Validation(object):
         :param flag:
         :return: bool
         """
-        board = self.player.board
+        board = self.board
         ship = self.ship
         if not is_vertical:
             for row in range(x, x + ship.ship_size):
@@ -145,3 +118,27 @@ class Validation(object):
             return False
         else:
             return True
+
+    @staticmethod
+    def location_fire_checking(board, x, y):
+        """
+        check fire location at board
+        :param board:
+        :param x: row
+        :param y: col
+        :return: bool
+        """
+        if not board.is_in_bounds(x, y):
+            print(f'{x}, {y} is not in bounds of our '
+                  f'{board.num_rows} X {board.num_cols} board')
+            flag = False
+        else:
+            flag = True
+
+        if board[[x, y]] != board.blank_char:
+            print(f"You have already fired at {x}, {y}")
+            flag = False
+        else:
+            flag = True and flag
+
+        return flag
