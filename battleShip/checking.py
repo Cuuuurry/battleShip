@@ -132,13 +132,10 @@ class Validation(object):
             print(f'{x}, {y} is not in bounds of our '
                   f'{board.num_rows} X {board.num_cols} board')
             flag = False
-        else:
-            flag = True
-
-        if board[[x, y]] != board.blank_char:
+        elif board[[x, y]] != board.blank_char:
             print(f"You have already fired at {x}, {y}")
             flag = False
         else:
-            flag = True and flag
+            flag = True
 
         return flag

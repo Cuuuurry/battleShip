@@ -76,41 +76,32 @@ class BattleShip(object):
                     x, y = int(x), int(y)
             print("process 2 finished")
 
-            # location is out of bound
-            if ready_to_break:
-                if not test.coordinate_in_board_checking(x, y):
-                    location = input("please enter a new location")
-                    ready_to_break = False
-            print("process 3 finished")
-
+            # location is out of bound or conflict
             if ready_to_break:
                 if not test.location_fire_checking(board, x, y):
                     location = input("please enter a new location")
                     ready_to_break = False
-            print("process 4 finished")
+            print("process 3 finished")
 
-            if opponent.board[[x, y]] == opponent.board.blank_char:
-                player.player_board_update(x, y, "O")
-                opponent.player_board_update(x, y, "O")
-            else:
-                player.player_board_update(x, y, "X")
-                opponent.player_board_update(x, y, "X")
-
-            player.scan_board[[x, y]] = opponent.board[[x, y]]
-
-        fire_location = (x, y)
-        miss = True
-        for ship in opponent.ship:
-            if fire_location in ship.ship_loc:
-                player.fire_on_target(opponent.player_name, ship)
-                ship.ship_health_change()
-                player.player_board_update()
-                if ship.ship_destroyed():
-                    player.ship_status(opponent.player_name, ship)
-                opponent.player_health_change()
-                miss = False
-        if miss:
+        if opponent.board[[x, y]] == opponent.board.blank_char:
+            player.player_board_update(x, y, "O", scan=True)
+            opponent.player_board_update(x, y, "O")
             print("Miss")
+        else:
+            fire_location = (x, y)
+            for ship in opponent.ship:
+                if fire_location in ship.ship_loc:
+                    player.fire_on_target(opponent.player_name, ship)
+                    ship.ship_health_change()
+                    player.player_board_update()
+                    if ship.ship_destroyed():
+                        player.ship_status(opponent.player_name, ship)
+                    opponent.player_health_change()
+                    break
+            player.player_board_update(x, y, "X", scan=True)
+            opponent.player_board_update(x, y, "X")
+
+
 
     def change_turn(self):
         self.cur_player, self.cur_opponent = self.cur_opponent, self.cur_player
