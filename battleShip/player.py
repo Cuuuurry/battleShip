@@ -3,17 +3,16 @@ This File:
     Printout game information for players
 """
 import sys
-import typing
-
+from typing import List
 from checking import Validation
 from ship import Ship
 from board import Board
 
 
 class Player(object):
-    def __init__(self, ship_list) -> None:
+    def __init__(self, listed_ships: List[Ship]) -> None:
         self.player_name = None
-        self.ship = ship_list  # list[ship]
+        self.ship = listed_ships  # list[ship]
         self.board = None
         self.scan_board = None
         self.player_health = 0
@@ -30,18 +29,21 @@ class Player(object):
         print("{}'s Placement Board".format(self.player_name))
         print(self.board)
 
-    def player_board_update(self, x: int, y: int, char: str, placement=False, scan=False):
+    def player_board_update(self, x: int, y: int, char: str, placement=False, scan=False, verbose=True):
         if not scan and not placement:
             self.board[[x, y]] = char
-            print("{}'s Board".format(self.player_name))
-            print(self.board)
+            if verbose:
+                print("{}'s Board".format(self.player_name))
+                print(self.board)
         elif placement:
             self.board[[x, y]] = char
-            print("{}'s Placement Board".format(self.player_name))
-            print(self.board)
+            if verbose:
+                print("{}'s Placement Board".format(self.player_name))
+                print(self.board)
         else:
             self.scan_board[[x, y]] = char
-            print("{}'s Scanning Board".format(self.player_name))
+            if verbose:
+                print("{}'s Scanning Board".format(self.player_name))
 
     def player_all_ships_initializer(self):
         for ship in self.ship:
@@ -74,7 +76,7 @@ class Player(object):
                 else:
                     x, y = location.split(',')
 
-        # check whether row or col is an integer
+            # check whether row or col is an integer
             if ready_to_break:
                 if not test.location_type_checking(x, y):
                     location = input("Please 2")
@@ -82,20 +84,20 @@ class Player(object):
                 else:
                     x, y = int(x), int(y)
 
-        # check the coordinate is valid or not
+            # check the coordinate is valid or not
             if ready_to_break:
                 if not test.coordinate_in_board_checking(x, y):
                     location = input("Please 3")
                     ready_to_break = False
 
-        # check The ship is out of bound
+            # check The ship is out of bound
             if ready_to_break:
                 if not test.ship_place_in_board_checking(x, y, is_vertical):
                     location = input("Please 4")
                     ready_to_break = False
 
-        # Checks to make sure the ship doesn't lie outside the board and that
-        # no ships have been placed on those spots.
+            # Checks to make sure the ship doesn't lie outside the board and that
+            # no ships have been placed on those spots.
             if ready_to_break:
                 if not test.ship_place_conflict_checking(x, y, is_vertical):
                     location = input("Please 5")
@@ -121,7 +123,7 @@ class Player(object):
     def player_health_change(self, ):
         self.player_health -= 1
 
-    def status_info(self,):
+    def status_info(self, ):
         print("{}'s Board: ".format(self.player_name))
 
     def status_scan_info(self):

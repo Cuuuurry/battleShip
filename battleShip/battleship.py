@@ -85,7 +85,7 @@ class BattleShip(object):
 
         if opponent.board[[x, y]] == opponent.board.blank_char:
             player.player_board_update(x, y, "O", scan=True)
-            opponent.player_board_update(x, y, "O")
+            opponent.player_board_update(x, y, "O", verbose=False)
             print("Miss")
         else:
             fire_location = (x, y)
@@ -93,15 +93,14 @@ class BattleShip(object):
                 if fire_location in ship.ship_loc:
                     player.fire_on_target(opponent.player_name, ship)
                     ship.ship_health_change()
-                    player.player_board_update()
+                    print(ship.ship_health)
                     if ship.ship_destroyed():
                         player.ship_status(opponent.player_name, ship)
                     opponent.player_health_change()
+                    print(player.player_health)
                     break
             player.player_board_update(x, y, "X", scan=True)
-            opponent.player_board_update(x, y, "X")
-
-
+            opponent.player_board_update(x, y, "X", verbose=False)
 
     def change_turn(self):
         self.cur_player, self.cur_opponent = self.cur_opponent, self.cur_player
