@@ -121,17 +121,6 @@ class Player(object):
     def player_health_change(self, ):
         self.player_health -= 1
 
-    def load_info(self, ):
-        print("{} enter horizontal or vertical for the {} of {} which is {} long: ".format(
-            self.player_name, self.ship_ori, self.ship_name, self.ship_size
-        ))
-
-        print("{}, enter the starting position for your {} ship ,which is {} long, in the form {}, {}: ".format(
-            self.player_name, self.ship_name, self.ship_size, self.ship_loc[1], self.ship_loc[0]
-        ))
-
-        print("{}'s Placement Board".format(self.player_name))
-
     def status_info(self,):
         print("{}'s Board: ".format(self.player_name))
 

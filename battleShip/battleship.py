@@ -89,6 +89,13 @@ class BattleShip(object):
                     ready_to_break = False
             print("process 4 finished")
 
+            if opponent.board[[x, y]] == opponent.board.blank_char:
+                player.player_board_update(x, y, "O")
+                opponent.player_board_update(x, y, "O")
+            else:
+                player.player_board_update(x, y, "X")
+                opponent.player_board_update(x, y, "X")
+
             player.scan_board[[x, y]] = opponent.board[[x, y]]
 
         fire_location = (x, y)
