@@ -105,11 +105,13 @@ class Player(object):
         # store ship message on board:
         if not is_vertical:
             for col in range(y, y + size):
-                self.player_board_update(x, col, ship.ship_name[0].upper(), placement=True)
+                vb = bool(col == y + size - 1)
+                self.player_board_update(x, col, ship.ship_name[0].upper(), placement=True, verbose=vb)
 
         elif is_vertical:
             for row in range(x, x + size):
-                self.player_board_update(row, y, ship.ship_name[0].upper(), placement=True)
+                vb = bool(row == x + size - 1)
+                self.player_board_update(row, y, ship.ship_name[0].upper(), placement=True, verbose=vb)
 
         # update the location of the ship
         ship.ship_located((x, y))
