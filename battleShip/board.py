@@ -19,10 +19,10 @@ class Board(object):
         rep = sep
         for i in range(self.num_cols):
             rep += ' ' + ' ' * (max_digit_num - len(str(i))) + str(i)
-        rep += '\n'
         for row_index, row in enumerate(self):
+            rep += '\n'
             num_of_space = max_digit_num - len(str(row_index))
-            rep += ' ' * num_of_space + str(row_index) + sep + sep.join(row) + '\n'
+            rep += ' ' * num_of_space + str(row_index) + sep + sep.join(row)
         return rep
 
     def __iter__(self) -> Iterator[List[str]]:
@@ -42,7 +42,7 @@ class Board(object):
 if __name__ == "__main__":
     board_case = Board(13, 13)
     print(board_case)
-    board_case[[1,2]] = "P"
+    board_case[[1, 2]] = "P"
     print(board_case)
-    print(board_case[[0,1]])
+    print(board_case[[0, 1]])
     print(board_case.is_in_bounds(13, 0))

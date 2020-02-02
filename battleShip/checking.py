@@ -21,20 +21,16 @@ class Validation(object):
         except ValueError:
             print(" {} is not a valid value for row.\n It should be an integer "
                   "between 0 and {}.".format(x, board.num_rows - 1))
-            flag = False
-        else:
-            flag = True
+            return False
 
         try:
             y = int(y)
         except ValueError:
             print(" {} is not a valid value for col.\n It should be an integer "
                   "between 0 and {}.".format(y, board.num_cols - 1))
-            flag = False
-        else:
-            flag = True and flag
+            return False
 
-        return flag
+        return True
 
     def coordinate_in_board_checking(self, x, y):
         """
@@ -72,7 +68,7 @@ class Validation(object):
         else:
             return True
 
-    def ship_place_conflict_checking(self, x, y, is_vertical: bool, flag=False):
+    def ship_place_conflict_checking(self, x: int, y: int, is_vertical: bool, flag=False):
         """
         check ship_place_conflict
         :param x: row
@@ -104,7 +100,7 @@ class Validation(object):
         return flag
 
     @staticmethod
-    def location_length_checking(location):
+    def location_length_checking(location: str):
         """
         check length of input location
         :param location: ""
@@ -114,13 +110,13 @@ class Validation(object):
         try:
             row, col = location.split(',')
         except ValueError:
-            print(f'{location} is not in the form row, col')
+            print(f'{location} is not in the form x,y')
             return False
         else:
             return True
 
     @staticmethod
-    def location_fire_checking(board, x, y):
+    def location_fire_checking(board: Board, x: int, y: int):
         """
         check fire location at board
         :param board:

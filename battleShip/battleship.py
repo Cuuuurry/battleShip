@@ -9,7 +9,6 @@ from board import Board
 from checking import Validation
 from player import Player
 from ship import Ship
-print("Successfully import classes")
 
 
 class BattleShip(object):
@@ -139,7 +138,8 @@ if __name__ == "__main__":
     """ship_dict = {"P": 2, "U": 3}
     battle = BattleShip(9, 9, ship_dict)
     battle.play()"""
-    ship_dict = {"Monkey": 1}
-    battle = BattleShip(3, 4, ship_dict)
+    # the case for ship placement checking(case 5 in text)
+    ship_dict = {"Patrol": 2, "Submarine": 3}
+    battle = BattleShip(5, 6, ship_dict)
     battle.play()
 
