@@ -19,14 +19,14 @@ class Validation(object):
         try:
             x = int(x)
         except ValueError:
-            print(" {} is not a valid value for row.\n It should be an integer "
+            print(" {} is not a valid value for row. It should be an integer "
                   "between 0 and {}.".format(x, board.num_rows - 1))
             return False
 
         try:
             y = int(y)
         except ValueError:
-            print(" {} is not a valid value for col.\n It should be an integer "
+            print(" {} is not a valid value for col. It should be an integer "
                   "between 0 and {}.".format(y, board.num_cols - 1))
             return False
 
