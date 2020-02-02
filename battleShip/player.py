@@ -44,6 +44,7 @@ class Player(object):
             self.scan_board[[x, y]] = char
             if verbose:
                 print("{}'s Scanning Board".format(self.player_name))
+                print(self.scan_board)
 
     def player_all_ships_initializer(self):
         for ship in self.ship:
@@ -55,23 +56,25 @@ class Player(object):
         board = self.board
         size = ship.ship_size
         test = Validation(board, ship)
-        orientation = input(f"{self.player_name} enter horizontal or vertical "
-                            f"for the orientation of {ship.ship_name} which is {ship.ship_size} long:")
-
-        # check orientation validation and orientation setting
-        ship.ship_oriented(orientation)
-        is_vertical = bool(ship.ship_ori == "vertical")
-
-        location = input(f"{self.player_name}, enter the starting position for your {ship.ship_name} ship ,"
-                         f"which is {ship.ship_size} long, in the form row, column:")
 
         ready_to_break = False
         # check valid location
         while not ready_to_break:
             ready_to_break = True
+            orientation = input(f"{self.player_name} enter horizontal or vertical "
+                                f"for the orientation of {ship.ship_name} which is {ship.ship_size} long:")
+            if ready_to_break:
+                # check orientation validation and orientation setting
+                if not ship.ship_oriented(orientation):
+                    ready_to_break = False
+                is_vertical = bool(ship.ship_ori == "vertical")
+
+            if ready_to_break:
+                location = input(f"{self.player_name}, enter the starting position for your {ship.ship_name} ship ,"
+                             f"which is {ship.ship_size} long, in the form row, column:")
+
             if ready_to_break:
                 if not test.location_length_checking(location):
-                    location = input("Please 1")
                     ready_to_break = False
                 else:
                     x, y = location.split(',')
@@ -79,7 +82,6 @@ class Player(object):
             # check whether row or col is an integer
             if ready_to_break:
                 if not test.location_type_checking(x, y):
-                    location = input("Please 2")
                     ready_to_break = False
                 else:
                     x, y = int(x), int(y)
@@ -87,20 +89,17 @@ class Player(object):
             # check the coordinate is valid or not
             if ready_to_break:
                 if not test.coordinate_in_board_checking(x, y):
-                    location = input("Please 3")
                     ready_to_break = False
 
             # check The ship is out of bound
             if ready_to_break:
                 if not test.ship_place_in_board_checking(x, y, is_vertical):
-                    location = input("Please 4")
                     ready_to_break = False
 
             # Checks to make sure the ship doesn't lie outside the board and that
             # no ships have been placed on those spots.
             if ready_to_break:
                 if not test.ship_place_conflict_checking(x, y, is_vertical):
-                    location = input("Please 5")
                     ready_to_break = False
 
         # store ship message on board:
@@ -122,27 +121,6 @@ class Player(object):
 
     def player_health_change(self, ):
         self.player_health -= 1
-
-    def status_info(self, ):
-        print("{}'s Board: ".format(self.player_name))
-
-    def status_scan_info(self):
-        print("{}'s Scanning Board: ".format(self.player_name))
-
-    def fire_info(self, ):
-        print("{}, enter the location you want to fire at in the form {}, {}: ".format(
-            self.player_name, self.ship_loc[1], self.ship_loc[0]))
-
-    @staticmethod
-    def fire_on_target(opponent_name, ship: Ship):
-        print("You hit {}'s {}!".format(opponent_name, ship.ship_name))
-
-    @staticmethod
-    def ship_status(opponent_name, ship: Ship):
-        print("You destroyed {}'s {}".format(opponent_name, ship.ship_name))
-
-    def game_result(self, ):
-        print("{} won the game!".format(self.player_name))
 
 
 if __name__ == "__main__":
