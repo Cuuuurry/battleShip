@@ -54,7 +54,7 @@ class BattleShip(object):
         opponent = self.cur_opponent
         ship = player.ship[0]
         test = Validation(board, ship)
-        location = input('Pleas enter the location you wish to fire on: ')
+        location = input(f'{player.player_name}, enter the location you want to fire at in the form row, column:')
         ready_to_break = False
         while not ready_to_break:
             ready_to_break = True
@@ -78,10 +78,16 @@ class BattleShip(object):
 
             # location is out of bound
             if ready_to_break:
-                if not test.location_fire_checking(board,x, y):
+                if not test.coordinate_in_board_checking(x, y):
                     location = input("please enter a new location")
                     ready_to_break = False
             print("process 3 finished")
+
+            if ready_to_break:
+                if not test.location_fire_checking(board, x, y):
+                    location = input("please enter a new location")
+                    ready_to_break = False
+            print("process 4 finished")
 
             player.scan_board[[x, y]] = opponent.board[[x, y]]
 
@@ -91,12 +97,13 @@ class BattleShip(object):
             if fire_location in ship.ship_loc:
                 player.fire_on_target(opponent.player_name, ship)
                 ship.ship_health_change()
+                player.player_board_update()
                 if ship.ship_destroyed():
                     player.ship_status(opponent.player_name, ship)
                 opponent.player_health_change()
                 miss = False
         if miss:
-            player.fire_miss()
+            print("Miss")
 
     def change_turn(self):
         self.cur_player, self.cur_opponent = self.cur_opponent, self.cur_player
@@ -134,14 +141,14 @@ class BattleShip(object):
         print(f"{self.cur_opponent.player_name} health is {self.cur_opponent.player_health}")
         self.display_game_stat()
         self.ship_fire()
-        print(self.cur_player.board)
+        self.display_game_stat()
         print(f"{self.cur_player.player_name} health is {self.cur_player.player_health}")
         print(f"{self.cur_opponent.player_name} health is {self.cur_opponent.player_health}")
         while not self.is_game_over():
             self.change_turn()
             self.display_game_stat()
             self.ship_fire()
-            print(self.cur_player.board)
+            self.display_game_stat()
             print(f"{self.cur_player.player_name} health is {self.cur_player.player_health}")
             print(f"{self.cur_opponent.player_name} health is {self.cur_opponent.player_health}")
         self.display_the_winner()

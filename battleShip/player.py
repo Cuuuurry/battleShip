@@ -143,10 +143,6 @@ class Player(object):
             self.player_name, self.ship_loc[1], self.ship_loc[0]))
 
     @staticmethod
-    def fire_miss():
-        print("Miss")
-
-    @staticmethod
     def fire_on_target(opponent_name, ship: Ship):
         print("You hit {}'s {}!".format(opponent_name, ship.ship_name))
 
@@ -164,5 +160,4 @@ if __name__ == "__main__":
     ship_list = [ship1, ship2]
     bob = Player(ship_list)
     sally = Player(ship_list)
-    bob.player_info(1)
     print(bob)
