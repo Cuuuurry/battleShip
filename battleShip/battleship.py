@@ -55,18 +55,18 @@ class BattleShip(object):
         test = Validation(board, ship)
         ready_to_break = False
         while not ready_to_break:
-            location = input(f'{player.player_name}, enter the location you want to fire at in the form row, column:')
+            location = input(f'{player.player_name}, enter the location you want to fire at in the form row, column: ')
             ready_to_break = True
             # location is not in the right length
             if ready_to_break:
-                if not test.location_length_checking(location):
+                if not test.location_length_checking(location, fire=True):
                     ready_to_break = False
                 else:
                     x, y = location.split(",")
 
             # location is invalid type
             if ready_to_break:
-                if not test.location_type_checking(x, y):
+                if not test.location_type_checking(x, y, fire=True):
                     ready_to_break = False
                 else:
                     x, y = int(x), int(y)
@@ -100,8 +100,10 @@ class BattleShip(object):
         cur_player = self.cur_player
         print(f"{cur_player.player_name}'s Scanning Board")
         print(cur_player.scan_board)
+        print("\n")
         print(f"{cur_player.player_name}'s Board")
         print(cur_player.board)
+        print("\n")
 
     def is_game_over(self):
         cur_opponent = self.cur_opponent

@@ -7,9 +7,10 @@ class Validation(object):
         self.board = board
         self.ship = ship
 
-    def location_type_checking(self, x, y, flag=False):
+    def location_type_checking(self, x, y, fire=False):
         """
         check whether row or col is an integer
+        :param fire:
         :param x: row
         :param y: col
         :param flag
@@ -19,15 +20,21 @@ class Validation(object):
         try:
             x = int(x)
         except ValueError:
-            print(" {} is not a valid value for row. It should be an integer "
-                  "between 0 and {}.".format(x, board.num_rows - 1))
+            if not fire:
+                print(" {} is not a valid value for row. It should be an integer "
+                      "between 0 and {}.".format(x, board.num_rows - 1))
+            else:
+                print(f"Row should be an integer. {x} is NOT an integer.")
             return False
 
         try:
             y = int(y)
         except ValueError:
-            print(" {} is not a valid value for col. It should be an integer "
-                  "between 0 and {}.".format(y, board.num_cols - 1))
+            if not fire:
+                print(" {} is not a valid value for col. It should be an integer "
+                      "between 0 and {}.".format(y, board.num_cols - 1))
+            else:
+                print("Column should be an integer.  {y} hello is NOT an integer.")
             return False
 
         return True
@@ -91,7 +98,7 @@ class Validation(object):
         elif not is_vertical:
             for col in range(y, y + ship.ship_size):
                 if board[[x, col]] != '*':
-                    print("Cannot place {} {}ly at {} {} because it would be overlap with [{}]."
+                    print("Cannot place {} {}ly at {} {} because it would be overlap with [\'{}\']."
                           .format(ship.ship_name, ship.ship_ori, x, y, board[[x, col]]))
                     flag = False
                     break
@@ -100,9 +107,10 @@ class Validation(object):
         return flag
 
     @staticmethod
-    def location_length_checking(location: str):
+    def location_length_checking(location: str, fire=False):
         """
         check length of input location
+        :param fire:
         :param location: ""
         :return: bool
         """
@@ -110,7 +118,10 @@ class Validation(object):
         try:
             row, col = location.split(',')
         except ValueError:
-            print(f'{location} is not in the form x,y')
+            if not fire:
+                print(f'{location} is not in the form x,y')
+            else:
+                print(f"{location} is not a valid location. Enter the firing location in the form row, column")
             return False
         else:
             return True
@@ -126,7 +137,7 @@ class Validation(object):
         """
         if not board.is_in_bounds(x, y):
             print(f'{x}, {y} is not in bounds of our '
-                  f'{board.num_rows} X {board.num_cols} board')
+                  f'{board.num_rows} X {board.num_cols} board.')
             flag = False
         elif board[[x, y]] != board.blank_char:
             print(f"You have already fired at {x}, {y}.")
