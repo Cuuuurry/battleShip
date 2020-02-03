@@ -43,7 +43,7 @@ class Validation(object):
         board = self.board
         ship = self.ship
         if not board.is_in_bounds(x, y):
-            print("Cannot place {} {} at {}, {} "
+            print("Cannot place {} {}ly at {}, {} "
                   "because it would be out of bounds."
                   .format(ship.ship_name, ship.ship_ori, x, y))
             return False
@@ -62,8 +62,8 @@ class Validation(object):
         ship = self.ship
         if bool((x + ship.ship_size > board.num_rows) * is_vertical +
                 (y + ship.ship_size > board.num_cols) * (1 - is_vertical)):
-            print("Cannot place {} {} at {}, {} "
-                  "because it would be out of bounds.".format(ship.ship_name, ship.ship_ori, x, y))
+            print("Cannot place {} {}ly at {}, {} "
+                  "because it would end up out of bounds.".format(ship.ship_name, ship.ship_ori, x, y))
             return False
         else:
             return True
@@ -82,8 +82,8 @@ class Validation(object):
         if is_vertical:
             for row in range(x, x + ship.ship_size):
                 if board[[row, y]] != '*':
-                    print("Cannot place {} {} at {},{} because it has conflicts."
-                          .format(ship.ship_name, ship.ship_ori, x, y))
+                    print("Cannot place {} {}ly at {},{} because it would be overlap with [\'{}\']."
+                          .format(ship.ship_name, ship.ship_ori, x, y, board[[row, y]]))
                     flag = False
                     break
                 else:
@@ -91,8 +91,8 @@ class Validation(object):
         elif not is_vertical:
             for col in range(y, y + ship.ship_size):
                 if board[[x, col]] != '*':
-                    print("Cannot place {} {} at {} {} because it has conflicts."
-                          .format(ship.ship_name, ship.ship_ori, x, y))
+                    print("Cannot place {} {}ly at {} {} because it would be overlap with [{}]."
+                          .format(ship.ship_name, ship.ship_ori, x, y, board[[x, col]]))
                     flag = False
                     break
                 else:
