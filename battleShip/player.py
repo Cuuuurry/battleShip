@@ -72,7 +72,7 @@ class Player(object):
 
             if ready_to_break:
                 location = input(f"{self.player_name}, enter the starting position for your {ship.ship_name} ship ,"
-                             f"which is {ship.ship_size} long, in the form row, column:")
+                             f"which is {ship.ship_size} long, in the form row, column: ")
 
             if ready_to_break:
                 if not test.location_length_checking(location):
