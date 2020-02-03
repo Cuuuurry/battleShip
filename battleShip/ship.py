@@ -33,9 +33,13 @@ class Ship(object):
     def ship_located(self, location: Tuple[int]):
         self.ship_loc = set()
         self.ship_loc.add(location)
-        index_dynamic = int(self.ship_ori == "horizontal")
-        for i in range(self.ship_size):
-            self.ship_loc.add(location[index_dynamic])
+        for i in range(self.ship_size-1):
+            if self.ship_ori == "horizontal":
+                new_location = (location[0], location[1]+i+1)
+                self.ship_loc.add(new_location)
+            else:
+                new_location = (location[0] + i + 1, location[1])
+                self.ship_loc.add(new_location)
 
     def ship_health_change(self):
         self.ship_health -= 1

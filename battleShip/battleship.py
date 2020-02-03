@@ -27,11 +27,11 @@ class BattleShip(object):
 
     def game_backend_setup(self, ):
         ship_size_dict = self.ship_size_dict
-        ship_list = []
-        for ship_name, ship_size in ship_size_dict.items():
-            new_ship = Ship(ship_name, int(ship_size))
-            ship_list.append(new_ship)
         for i in range(2):
+            ship_list = []
+            for ship_name, ship_size in ship_size_dict.items():
+                new_ship = Ship(ship_name, int(ship_size))
+                ship_list.append(new_ship)
             new_player = Player(ship_list)
             self.players.append(new_player)
         self.cur_player, self.cur_opponent = self.players
