@@ -21,8 +21,8 @@ class Validation(object):
             x = int(x)
         except ValueError:
             if not fire:
-                print(" {} is not a valid value for row. It should be an integer "
-                      "between 0 and {}".format(x, board.num_rows - 1))
+                print(f"{x} is not a valid value for row."
+                      f"It should be an integer between 0 and {board.num_rows - 1}")
             else:
                 print(f"Row should be an integer. {x} is NOT an integer.")
             return False
@@ -89,7 +89,7 @@ class Validation(object):
         if is_vertical:
             for row in range(x, x + ship.ship_size):
                 if board[[row, y]] != '*':
-                    print("Cannot place {} {}ly at {},{} because it would be overlap with [\'{}\']."
+                    print("Cannot place {} {}ly at {}, {} because it would overlap with [\'{}\']"
                           .format(ship.ship_name, ship.ship_ori, x, y, board[[row, y]]))
                     flag = False
                     break
@@ -98,7 +98,7 @@ class Validation(object):
         elif not is_vertical:
             for col in range(y, y + ship.ship_size):
                 if board[[x, col]] != '*':
-                    print("Cannot place {} {}ly at {} {} because it would be overlap with [\'{}\']."
+                    print("Cannot place {} {}ly at {}, {} because it would overlap with [\'{}\']"
                           .format(ship.ship_name, ship.ship_ori, x, y, board[[x, col]]))
                     flag = False
                     break
