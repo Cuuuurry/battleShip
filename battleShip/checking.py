@@ -129,7 +129,7 @@ class Validation(object):
                   f'{board.num_rows} X {board.num_cols} board')
             flag = False
         elif board[[x, y]] != board.blank_char:
-            print(f"You have already fired at {x}, {y}")
+            print(f"You have already fired at {x}, {y}.")
             flag = False
         else:
             flag = True

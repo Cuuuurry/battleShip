@@ -138,8 +138,31 @@ if __name__ == "__main__":
     """ship_dict = {"P": 2, "U": 3}
     battle = BattleShip(9, 9, ship_dict)
     battle.play()"""
-    # the case for ship placement checking(case 5 in text)
-    ship_dict = {"Patrol": 2, "Submarine": 3}
-    battle = BattleShip(5, 6, ship_dict)
-    battle.play()
+    case = input("please input a number from 1 to 5")
+    if case == "1":
+        # test case 1:
+        ship_dict = {"Patrol": 2, "Submarine": 3}
+        battle = BattleShip(5, 6, ship_dict)
+        battle.play()
+    elif case == "2":
+        # test case 1:
+        ship_dict = {"Patrol": 2, "Submarine": 3, "Destroyer": 3, "Battleship": 4, "Carrier": 5}
+        battle = BattleShip(7, 7, ship_dict)
+        battle.play()
+    elif case == "3":
+        # test case 1:
+        ship_dict = {"Patrol": 2, "Submarine": 3}
+        battle = BattleShip(5, 6, ship_dict)
+        battle.play()
+    elif case == "4":
+        # test case 1:
+        ship_dict = {"Monkey": 1}
+        battle = BattleShip(3, 4, ship_dict)
+        battle.play()
+    elif case == "5":
+        # the case for ship placement checking(case 5 in text)
+        ship_dict = {"Patrol": 2, "Submarine": 3}
+        battle = BattleShip(5, 6, ship_dict)
+        battle.play()
+
 
