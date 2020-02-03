@@ -121,7 +121,8 @@ class Validation(object):
             if not fire:
                 print(f'{location} is not in the form x,y')
             else:
-                print(f"{location} is not a valid location. Enter the firing location in the form row, column")
+                print(f"{location} is not a valid location.")
+                print("Enter the firing location in the form row, column")
             return False
         else:
             return True
