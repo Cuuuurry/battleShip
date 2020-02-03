@@ -90,7 +90,7 @@ class BattleShip(object):
                         print("You destroyed {}'s {}".format(opponent.player_name, ship.ship_name))
                     opponent.player_health_change()
                     break
-            player.player_board_update(x, y, "X", scan=True)
+            player.player_board_update(x, y, "X", scan=True, verbose=False)
             opponent.player_board_update(x, y, "X", verbose=False)
 
     def change_turn(self):
