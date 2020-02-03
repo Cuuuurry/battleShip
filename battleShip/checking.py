@@ -7,7 +7,7 @@ class Validation(object):
         self.board = board
         self.ship = ship
 
-    def location_type_checking(self, x, y, fire=False):
+    def location_type_checking(self, x: str, y: str, fire=False):
         """
         check whether row or col is an integer
         :param fire:
@@ -21,8 +21,8 @@ class Validation(object):
             x = int(x)
         except ValueError:
             if not fire:
-                print(f"{x} is not a valid value for row."
-                      f"It should be an integer between 0 and {board.num_rows - 1}")
+                print(f"{x} is not a valid value for row.")
+                print(f"It should be an integer between 0 and {board.num_rows - 1}")
             else:
                 print(f"Row should be an integer. {x} is NOT an integer.")
             return False
@@ -31,8 +31,8 @@ class Validation(object):
             y = int(y)
         except ValueError:
             if not fire:
-                print(" {} is not a valid value for col. It should be an integer "
-                      "between 0 and {}".format(y, board.num_cols - 1))
+                print(f"{y} is not a valid value for col.")
+                print(f"It should be an integer between 0 and {board.num_cols - 1}")
             else:
                 print(f"Column should be an integer. {y} is NOT an integer.")
             return False
