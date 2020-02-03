@@ -21,6 +21,7 @@ class BattleShip(object):
         self.num_rows = num_rows
         self.num_cols = num_cols
         self.players = []
+        self.player_name_pool = set()
         self.cur_player = None
         self.cur_opponent = None
         self.ship_size_dict = ship_size_dict
@@ -40,7 +41,15 @@ class BattleShip(object):
         i = 1
         while i <= 2:
             player = self.cur_player
-            player.player_name_initializer(i)
+            name_unique = False
+            while not name_unique:
+                name = player.player_name_initializer(i)
+                if name not in self.player_name_pool:
+                    name_unique = True
+                    self.player_name_pool.add(name)
+                else:
+                    print(f"Someone is already using {name} for their name.")
+                    print("Please choose another name.")
             player.player_board_initializer(self.num_rows, self.num_cols)
             player.player_all_ships_initializer()
             player.player_health_initializer()

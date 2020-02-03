@@ -22,7 +22,7 @@ class Validation(object):
         except ValueError:
             if not fire:
                 print(" {} is not a valid value for row. It should be an integer "
-                      "between 0 and {}.".format(x, board.num_rows - 1))
+                      "between 0 and {}".format(x, board.num_rows - 1))
             else:
                 print(f"Row should be an integer. {x} is NOT an integer.")
             return False
@@ -32,9 +32,9 @@ class Validation(object):
         except ValueError:
             if not fire:
                 print(" {} is not a valid value for col. It should be an integer "
-                      "between 0 and {}.".format(y, board.num_cols - 1))
+                      "between 0 and {}".format(y, board.num_cols - 1))
             else:
-                print(f"Column should be an integer.  {y} is NOT an integer.")
+                print(f"Column should be an integer. {y} is NOT an integer.")
             return False
 
         return True

@@ -22,6 +22,7 @@ class Player(object):
 
     def player_name_initializer(self, i):
         self.player_name = input(f"Player {i} please enter your name: ")
+        return self.player_name
 
     def player_board_initializer(self, num_rows: int, num_cols: int, blank_char: str = "*"):
         self.board = Board(num_rows, num_cols, blank_char)
@@ -62,7 +63,7 @@ class Player(object):
         while not ready_to_break:
             ready_to_break = True
             orientation = input(f"{self.player_name} enter horizontal or vertical "
-                                f"for the orientation of {ship.ship_name} which is {ship.ship_size} long:")
+                                f"for the orientation of {ship.ship_name} which is {ship.ship_size} long: ")
             if ready_to_break:
                 # check orientation validation and orientation setting
                 if not ship.ship_oriented(orientation):
