@@ -34,7 +34,7 @@ class Validation(object):
                 print(" {} is not a valid value for col. It should be an integer "
                       "between 0 and {}.".format(y, board.num_cols - 1))
             else:
-                print("Column should be an integer.  {y} hello is NOT an integer.")
+                print(f"Column should be an integer.  {y} is NOT an integer.")
             return False
 
         return True

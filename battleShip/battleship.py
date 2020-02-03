@@ -99,11 +99,11 @@ class BattleShip(object):
     def display_game_stat(self):
         cur_player = self.cur_player
         print(f"{cur_player.player_name}'s Scanning Board")
-        print(cur_player.scan_board)
-        print("\n")
+        print(cur_player.scan_board )
+        print("")
         print(f"{cur_player.player_name}'s Board")
         print(cur_player.board)
-        print("\n")
+        print("")
 
     def is_game_over(self):
         cur_opponent = self.cur_opponent
