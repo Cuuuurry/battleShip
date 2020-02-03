@@ -13,7 +13,7 @@ class Board(object):
         self.board = [[blank_char for col in range(num_cols)] for row in range(num_rows)]
         self.blank_char = blank_char
 
-    def __str__(self):
+    def __str__(self) -> str:
         max_digit_num = max([len(str(self.num_rows)), len(str(self.num_cols))])
         sep = ' ' * max_digit_num
         rep = sep
@@ -31,7 +31,7 @@ class Board(object):
     def __getitem__(self, index: List[int]) -> str:
         return self.board[index[0]][index[1]]
 
-    def __setitem__(self, index: List[int], value: str):
+    def __setitem__(self, index: List[int], value: str) -> None:
         self.board[index[0]][index[1]] = value
 
     def is_in_bounds(self, row: int, col: int) -> bool:

@@ -1,13 +1,12 @@
 from board import Board
 from ship import Ship
 
-
 class Validation(object):
-    def __init__(self, board: Board, ship: Ship):
+    def __init__(self, board: Board, ship: Ship) -> None:
         self.board = board
         self.ship = ship
 
-    def location_type_checking(self, x: str, y: str, fire=False):
+    def location_type_checking(self, x: str, y: str, fire=False) -> bool:
         """
         check whether row or col is an integer
         :param fire:
@@ -39,7 +38,7 @@ class Validation(object):
 
         return True
 
-    def coordinate_in_board_checking(self, x, y):
+    def coordinate_in_board_checking(self, x: int, y: int) -> bool:
         """
         check coordinate in board
         :param x: row
@@ -57,7 +56,7 @@ class Validation(object):
         else:
             return True
 
-    def ship_place_in_board_checking(self, x, y, is_vertical: bool):
+    def ship_place_in_board_checking(self, x: int, y: int, is_vertical: bool):
         """
         check ship place in board
         :param x: row

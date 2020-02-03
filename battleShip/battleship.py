@@ -4,8 +4,7 @@ This File:
 
 """
 from sys import argv
-from typing import Iterable, TypeVar, Tuple
-from board import Board
+from typing import Iterable, TypeVar, Tuple, Dict
 from checking import Validation
 from player import Player
 from ship import Ship
@@ -17,7 +16,7 @@ class BattleShip(object):
         Two players
         Four boards: two initial boards (static), two scan boards (dynamic)
     """
-    def __init__(self, num_rows, num_cols, ship_size_dict) -> None:
+    def __init__(self, num_rows: int, num_cols: int, ship_size_dict: Dict) -> None:
         self.num_rows = num_rows
         self.num_cols = num_cols
         self.players = []
@@ -26,7 +25,7 @@ class BattleShip(object):
         self.cur_opponent = None
         self.ship_size_dict = ship_size_dict
 
-    def game_backend_setup(self, ):
+    def game_backend_setup(self) -> None:
         ship_size_dict = self.ship_size_dict
         for i in range(2):
             ship_list = []
@@ -56,7 +55,7 @@ class BattleShip(object):
             self.change_turn()
             i += 1
 
-    def ship_fire(self):
+    def ship_fire(self) -> None:
         player = self.cur_player
         board = player.scan_board
         opponent = self.cur_opponent
@@ -102,10 +101,10 @@ class BattleShip(object):
             player.player_board_update(x, y, "X", scan=True, verbose=False)
             opponent.player_board_update(x, y, "X", verbose=False)
 
-    def change_turn(self):
+    def change_turn(self) -> None:
         self.cur_player, self.cur_opponent = self.cur_opponent, self.cur_player
 
-    def display_game_stat(self):
+    def display_game_stat(self) -> None:
         cur_player = self.cur_player
         print(f"{cur_player.player_name}'s Scanning Board")
         print(cur_player.scan_board )
@@ -114,14 +113,14 @@ class BattleShip(object):
         print(cur_player.board)
         print("")
 
-    def is_game_over(self):
+    def is_game_over(self) -> bool:
         cur_opponent = self.cur_opponent
         if cur_opponent.player_health == 0:
             return True
         else:
             return False
 
-    def display_the_winner(self):
+    def display_the_winner(self) -> None:
         print("{} won the game!".format(self.cur_player.player_name))
 
     def play(self) -> None:
@@ -156,17 +155,17 @@ if __name__ == "__main__":
         battle = BattleShip(5, 6, ship_dict)
         battle.play()
     elif case == "2":
-        # test case 1:
+        # test case 2:
         ship_dict = {"Patrol": 2, "Submarine": 3, "Destroyer": 3, "Battleship": 4, "Carrier": 5}
         battle = BattleShip(7, 7, ship_dict)
         battle.play()
     elif case == "3":
-        # test case 1:
+        # test case 3:
         ship_dict = {"Patrol": 2, "Submarine": 3}
         battle = BattleShip(5, 6, ship_dict)
         battle.play()
     elif case == "4":
-        # test case 1:
+        # test case 4:
         ship_dict = {"Monkey": 1}
         battle = BattleShip(3, 4, ship_dict)
         battle.play()

@@ -20,17 +20,29 @@ class Player(object):
     def __str__(self) -> str:
         return self.player_name
 
-    def player_name_initializer(self, i):
+    def player_name_initializer(self, i: int) -> str:
+        """
+        Initialize the player's name
+        :param i: int, refer to the 1st or 2nd player in the game.
+        :return:
+        """
         self.player_name = input(f"Player {i} please enter your name: ")
         return self.player_name
 
-    def player_board_initializer(self, num_rows: int, num_cols: int, blank_char: str = "*"):
+    def player_board_initializer(self, num_rows: int, num_cols: int, blank_char: str = "*") -> None:
+        """
+
+        :param num_rows: int
+        :param num_cols: int
+        :param blank_char: str
+        :return: None
+        """
         self.board = Board(num_rows, num_cols, blank_char)
         self.scan_board = Board(num_rows, num_cols, blank_char)
         print("{}'s Placement Board".format(self.player_name))
         print(self.board)
 
-    def player_board_update(self, x: int, y: int, char: str, placement=False, scan=False, verbose=True):
+    def player_board_update(self, x: int, y: int, char: str, placement=False, scan=False, verbose=True) -> None:
         if not scan and not placement:
             self.board[[x, y]] = char
             if verbose:
@@ -47,7 +59,7 @@ class Player(object):
                 print("{}'s Scanning Board".format(self.player_name))
                 print(self.scan_board)
 
-    def player_all_ships_initializer(self):
+    def player_all_ships_initializer(self) -> None:
         for ship in self.ship:
             self.player_single_ship_loader(ship)
 
@@ -117,12 +129,12 @@ class Player(object):
         # update the location of the ship
         ship.ship_located((x, y))
 
-    def player_health_initializer(self, ):
+    def player_health_initializer(self) -> int:
         for ship in self.ship:
             self.player_health += ship.ship_health
         return self.player_health
 
-    def player_health_change(self, ):
+    def player_health_change(self) -> None:
         self.player_health -= 1
 
 

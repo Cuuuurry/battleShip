@@ -4,18 +4,18 @@ This File:
         Count the fire
 """
 
-from typing import List, Tuple
+from typing import Tuple
 
 
 class Ship(object):
-    def __init__(self, ship_name, ship_size) -> None:
+    def __init__(self, ship_name: str, ship_size: int) -> None:
         self.ship_name = ship_name
         self.ship_size = ship_size
         self.ship_ori = None
         self.ship_loc = set()
         self.ship_health = ship_size
 
-    def ship_oriented(self, orientation: str):
+    def ship_oriented(self, orientation: str) -> bool:
         # check orientation validation
         if orientation.lower() in {"vertical", "v", "ve", "ver", "vert", "verti", "vertic", "vertica",
                                    "vertical ", "v ", "ve ", "ver ", "vert ", "verti ", "vertic ", "vertica "}:
@@ -34,7 +34,7 @@ class Ship(object):
             print("{} does not represent an Orientation".format(orientation))
             return False
 
-    def ship_located(self, location: Tuple[int]):
+    def ship_located(self, location: Tuple[int]) -> None:
         self.ship_loc = set()
         self.ship_loc.add(location)
         for i in range(self.ship_size-1):
@@ -45,10 +45,10 @@ class Ship(object):
                 new_location = (location[0] + i + 1, location[1])
                 self.ship_loc.add(new_location)
 
-    def ship_health_change(self):
+    def ship_health_change(self) -> None:
         self.ship_health -= 1
 
-    def ship_destroyed(self):
+    def ship_destroyed(self) -> bool:
         if not self.ship_health:
             return True
         else:
