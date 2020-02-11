@@ -5,10 +5,8 @@ This File:
     Main script for Battleship game execution
 """
 
-
-import sys
-from player import Player
 from sys import argv
+from battleship import BattleShip
 
 if __name__ == '__main__':
     # get line information in the configs file
@@ -21,17 +19,5 @@ if __name__ == '__main__':
             else:
                 ship_size_dict[line.split()[0]] = line.split()[1]
 
-    # call player class
-    test = Player()
-    test.initial_info()
-
-    """
-    board_dim = 3
-    for pos, val in enumerate(sys.argv):
-        print(f'{pos}: {val}')
-    if len(sys.argv) >= 2:  # user provided a board dimension
-        # board_dim = int(sys.argv[1])
-        pass
-    # game = TicTacToeGame(board_dim)
-    # game.play()
-    """
+    test = BattleShip(board_size[0], board_size[1], ship_size_dict)
+    test.play()
