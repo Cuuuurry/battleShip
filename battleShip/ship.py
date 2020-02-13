@@ -17,16 +17,13 @@ class Ship(object):
 
     def ship_oriented(self, orientation: str) -> bool:
         # check orientation validation
-        if orientation.lower() in {"vertical", "v", "ve", "ver", "vert", "verti", "vertic", "vertica",
-                                   "vertical ", "v ", "ve ", "ver ", "vert ", "verti ", "vertic ", "vertica "}:
+        ori = orientation.strip().lower()
+        compare_num = len(ori)
+        if ori == "vertical"[:compare_num]:
             # set orientation
             self.ship_ori = "vertical"
             return True
-        elif orientation.lower() in {"horizontal", "h", "ho", "hor", "hori", "horiz", "horizo", "horizon",
-                                     "horizont", "horizonta", "horizontal",
-                                     "horizontal ", "h ", "ho ", "hor ", "hori ", "horiz ", "horizo ", "horizon ",
-                                     "horizont ", "horizonta ", "horizontal "
-                                     }:
+        elif ori == "horizontal"[:compare_num]:
             # set orientation
             self.ship_ori = "horizontal"
             return True

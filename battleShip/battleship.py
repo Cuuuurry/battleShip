@@ -5,10 +5,14 @@ This File:
 """
 from sys import argv
 from typing import Iterable, TypeVar, Tuple, Dict
+
+from cheatingai import CheatingAI
 from checking import Validation
 from player import Player
 from ship import Ship
-
+from randomai import RandomAI
+from humanplayer import HumanPlayer
+from searchdestroyplayer import SearchDestroyAi
 
 class BattleShip(object):
     """
@@ -25,81 +29,57 @@ class BattleShip(object):
         self.cur_opponent = None
         self.ship_size_dict = ship_size_dict
 
-    def game_backend_setup(self) -> None:
+    def players_register(self) -> None:
         ship_size_dict = self.ship_size_dict
         for i in range(2):
             ship_list = []
             for ship_name, ship_size in ship_size_dict.items():
                 new_ship = Ship(ship_name, int(ship_size))
                 ship_list.append(new_ship)
-            new_player = Player(ship_list)
-            self.players.append(new_player)
-        self.cur_player, self.cur_opponent = self.players
-
-    def players_register(self) -> None:
-        i = 1
-        while i <= 2:
-            player = self.cur_player
             name_unique = False
-            while not name_unique:
-                name = player.player_name_initializer(i)
-                if name not in self.player_name_pool:
-                    name_unique = True
-                    self.player_name_pool.add(name)
-                else:
-                    print(f"Someone is already using {name} for their name.")
-                    print("Please choose another name.")
+
+            type_of_player = input(f"Enter one of ['Human', 'CheatingAi', "
+                                   f"'SearchDestroyAi', 'RandomAi'] for Player {i}'s type:")
+            type_of_player = type_of_player.strip().lower()
+            compare_num = len(type_of_player)
+
+            if type_of_player == "human"[:compare_num]:
+                player = HumanPlayer(ship_list)
+                while not name_unique:
+                    name = player.player_name_initializer(i)
+                    if name not in self.player_name_pool:
+                        name_unique = True
+                        self.player_name_pool.add(name)
+                    else:
+                        print(f"Someone is already using {name} for their name.")
+                        print("Please choose another name.")
+
+            else:
+                if type_of_player == "randomai"[:compare_num]:
+                    player = RandomAI(ship_list)
+                    name = player.random_name_initializer(i)
+                elif type_of_player == "searchdestroyai"[:compare_num]:
+                    player = SearchDestroyAi(ship_list)
+                    name = player.SD_name_initializer(i)
+                elif type_of_player == "cheatingai"[:compare_num]:
+                    player = CheatingAI(ship_list)
+                    name = player.cheating_name_initializer(i)
+
+                self.player_name_pool.add(name)
+
+            self.players.append(player)
             player.player_board_initializer(self.num_rows, self.num_cols)
             player.player_all_ships_initializer()
             player.player_health_initializer()
-            self.change_turn()
-            i += 1
 
-    def ship_fire(self) -> None:
-        player = self.cur_player
-        board = player.scan_board
-        opponent = self.cur_opponent
-        ship = player.ship[0]
-        test = Validation(board, ship)
-        ready_to_break = False
-        while not ready_to_break:
-            location = input(f'{player.player_name}, enter the location you want to fire at in the form row, column: ')
-            ready_to_break = True
-            # location is not in the right length
-            if ready_to_break:
-                if not test.location_length_checking(location, fire=True):
-                    ready_to_break = False
-                else:
-                    x, y = location.split(",")
+        self.cur_player, self.cur_opponent = self.players
 
-            # location is invalid type
-            if ready_to_break:
-                if not test.location_type_checking(x, y, fire=True):
-                    ready_to_break = False
-                else:
-                    x, y = int(x), int(y)
+        # if you are cheater AI, we show you the ability to cheat
+        if self.cur_player.player_type == "CheatingAI":
+            self.cur_player.cheating_bag = self.cur_opponent.player_ships_loc
 
-            # location is out of bound or conflict
-            if ready_to_break:
-                if not test.location_fire_checking(board, x, y):
-                    ready_to_break = False
-
-        if opponent.board[[x, y]] == opponent.board.blank_char:
-            print("Miss")
-            player.player_board_update(x, y, "O", scan=True, verbose=False)
-            opponent.player_board_update(x, y, "O", verbose=False)
-        else:
-            fire_location = (x, y)
-            for ship in opponent.ship:
-                if fire_location in ship.ship_loc:
-                    print("You hit {}'s {}!".format(opponent.player_name, ship.ship_name))
-                    ship.ship_health_change()
-                    if ship.ship_destroyed():
-                        print("You destroyed {}'s {}".format(opponent.player_name, ship.ship_name))
-                    opponent.player_health_change()
-                    break
-            player.player_board_update(x, y, "X", scan=True, verbose=False)
-            opponent.player_board_update(x, y, "X", verbose=False)
+        if self.cur_opponent.player_type == "CheatingAI":
+            self.cur_opponent.cheating_bag = self.cur_player.player_ships_loc
 
     def change_turn(self) -> None:
         self.cur_player, self.cur_opponent = self.cur_opponent, self.cur_player
@@ -130,16 +110,15 @@ class BattleShip(object):
 
         :return:
         """
-        # setups
-        self.game_backend_setup()
+        # setups1
         self.players_register()
         self.display_game_stat()
-        self.ship_fire()
+        self.cur_player.ship_fire(self.cur_opponent)
         self.display_game_stat()
         while not self.is_game_over():
             self.change_turn()
             self.display_game_stat()
-            self.ship_fire()
+            self.cur_player.ship_fire(self.cur_opponent)
             self.display_game_stat()
         self.display_the_winner()
 

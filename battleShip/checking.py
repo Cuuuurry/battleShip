@@ -1,6 +1,7 @@
 from board import Board
 from ship import Ship
 
+
 class Validation(object):
     def __init__(self, board: Board, ship: Ship) -> None:
         self.board = board
@@ -74,9 +75,10 @@ class Validation(object):
         else:
             return True
 
-    def ship_place_conflict_checking(self, x: int, y: int, is_vertical: bool, flag=False):
+    def ship_place_conflict_checking(self, x: int, y: int, is_vertical: bool, flag=False, verbose=True):
         """
         check ship_place_conflict
+        :param verbose: bool
         :param x: row
         :param y: col
         :param is_vertical: bool
@@ -88,8 +90,9 @@ class Validation(object):
         if is_vertical:
             for row in range(x, x + ship.ship_size):
                 if board[[row, y]] != '*':
-                    print("Cannot place {} {}ly at {}, {} because it would overlap with [\'{}\']"
-                          .format(ship.ship_name, ship.ship_ori, x, y, board[[row, y]]))
+                    if verbose:
+                        print("Cannot place {} {}ly at {}, {} because it would overlap with [\'{}\']"
+                              .format(ship.ship_name, ship.ship_ori, x, y, board[[row, y]]))
                     flag = False
                     break
                 else:
@@ -97,8 +100,9 @@ class Validation(object):
         elif not is_vertical:
             for col in range(y, y + ship.ship_size):
                 if board[[x, col]] != '*':
-                    print("Cannot place {} {}ly at {}, {} because it would overlap with [\'{}\']"
-                          .format(ship.ship_name, ship.ship_ori, x, y, board[[x, col]]))
+                    if verbose:
+                        print("Cannot place {} {}ly at {}, {} because it would overlap with [\'{}\']"
+                              .format(ship.ship_name, ship.ship_ori, x, y, board[[x, col]]))
                     flag = False
                     break
                 else:
@@ -127,20 +131,23 @@ class Validation(object):
             return True
 
     @staticmethod
-    def location_fire_checking(board: Board, x: int, y: int):
+    def location_fire_checking(board: Board, x: int, y: int, verbose=True):
         """
         check fire location at board
+        :param verbose:
         :param board:
         :param x: row
         :param y: col
         :return: bool
         """
         if not board.is_in_bounds(x, y):
-            print(f'{x}, {y} is not in bounds of our '
-                  f'{board.num_rows} X {board.num_cols} board.')
+            if verbose:
+                print(f'{x}, {y} is not in bounds of our '
+                      f'{board.num_rows} X {board.num_cols} board.')
             flag = False
         elif board[[x, y]] != board.blank_char:
-            print(f"You have already fired at {x}, {y}.")
+            if verbose:
+                print(f"You have already fired at {x}, {y}.")
             flag = False
         else:
             flag = True
