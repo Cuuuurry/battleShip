@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0022bb1d-5549-4bab-98f6-0b5bccb66f2b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/searchdestroyplayer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/battleship.py" beforeDir="false" afterPath="$PROJECT_DIR$/battleship.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cheatingai.py" beforeDir="false" afterPath="$PROJECT_DIR$/cheatingai.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/checking.py" beforeDir="false" afterPath="$PROJECT_DIR$/checking.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/humanplayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/humanplayer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/huntdestroyai.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/randomai.py" beforeDir="false" afterPath="$PROJECT_DIR$/randomai.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ship.py" beforeDir="false" afterPath="$PROJECT_DIR$/ship.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +192,7 @@
       <workItem from="1581395827949" duration="4247000" />
       <workItem from="1581471206420" duration="9888000" />
       <workItem from="1581484010174" duration="34000" />
-      <workItem from="1581546235232" duration="11821000" />
+      <workItem from="1581546235232" duration="12121000" />
     </task>
     <task id="LOCAL-00001" summary="fulfill basic settings">
       <created>1580197374219</created>
