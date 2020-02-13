@@ -6,12 +6,13 @@ from checking import Validation
 from ship import Ship
 from player import Player
 
+
 class SearchDestroyAi(Player):
     def __init__(self, listed_ships: List[Ship]):
         super().__init__(listed_ships)
         self.player_type = "SearchDestroyAI"
         self.mode = "Search"
-        self.target_ships = {}  # the current place, the current ship,
+        self.target_points_queue = []  # the current place, the current ship,
 
     def SD_name_initializer(self, i: int):
         self.player_name = f"Search Destroy AI {i}"
@@ -67,21 +68,19 @@ class SearchDestroyAi(Player):
         ship = self.ship[0]
         test = Validation(board, ship)
         ready_to_break = False
-        if self.mode == "Search":
-            while not ready_to_break:
+        while not ready_to_break:
+            if not self.target_points_queue:
+                self.mode = "Search"
+            if self.mode == "Search":
                 x = random.randint(0, board.num_rows - 1)
                 y = random.randint(0, board.num_cols - 1)
-                ready_to_break = True
-                # location is out of bound or conflict
-                if ready_to_break:
-                    if not test.location_fire_checking(board, x, y, verbose=False):
-                        ready_to_break = False
-        if self.mode == "Destroy":
-            for ship in self.target_ships:
-                while self.target_ships[ship]:
-                    pass
-
-
+            else:
+                x, y = self.target_points_queue.pop(0)
+            ready_to_break = True
+            # location is out of bound or conflict
+            if ready_to_break:
+                if not test.location_fire_checking(board, x, y, verbose=False):
+                    ready_to_break = False
 
         if opponent.board[[x, y]] == opponent.board.blank_char:
             print("Miss")
@@ -97,5 +96,16 @@ class SearchDestroyAi(Player):
                         print("You destroyed {}'s {}".format(opponent.player_name, ship.ship_name))
                     opponent.player_health_change()
                     break
+            if x > 0:
+                self.target_points_queue.append([x - 1, y])
+            if y > 0:
+                self.target_points_queue.append([x, y - 1])
+            if x + 1 < board.num_rows:
+                self.target_points_queue.append([x + 1, y])
+            if y + 1 < board.num_cols:
+                self.target_points_queue.append([x, y + 1])
+
+            self.mode = "Destroy"
+
             self.player_board_update(x, y, "X", scan=True, verbose=False)
             opponent.player_board_update(x, y, "X", verbose=False)
