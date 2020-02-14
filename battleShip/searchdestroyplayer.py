@@ -16,7 +16,7 @@ class SearchDestroyAi(Player):
         self.target_points_queue = []  # the current place, the current ship,
 
     def SD_name_initializer(self, i: int):
-        self.player_name = f"Search Destroy Ai {i}"
+        self.player_name = f"Search Destroy AI {i}"
         return self.player_name
 
     def player_all_ships_initializer(self):
@@ -74,16 +74,21 @@ class SearchDestroyAi(Player):
         if not self.undetected_loc:
             raise Exception("Game Bug, I should have won")
 
-        loc = random.choice(self.undetected_loc)
-        self.undetected_loc.remove(loc)
-        x, y = loc
+        if not self.target_points_queue:
+            self.mode = "Search"
+        if self.mode == "Search":
+            x, y = random.choice(self.undetected_loc)
+        else:
+            x, y = self.target_points_queue.pop(0)
 
         if opponent.board[[x, y]] == opponent.board.blank_char:
             print("Miss")
             self.player_board_update(x, y, "O", scan=True, verbose=False)
             opponent.player_board_update(x, y, "O", verbose=False)
+            self.undetected_loc.remove([x, y])
         else:
             fire_location = (x, y)
+            self.undetected_loc.remove([x, y])
             for ship in opponent.ship:
                 if fire_location in ship.ship_loc:
                     print("You hit {}'s {}!".format(opponent.player_name, ship.ship_name))
@@ -92,13 +97,13 @@ class SearchDestroyAi(Player):
                         print("You destroyed {}'s {}".format(opponent.player_name, ship.ship_name))
                     opponent.player_health_change()
                     break
-            if y > 0:
+            if y > 0 and [x, y - 1] in self.undetected_loc and [x, y - 1] not in self.target_points_queue:
                 self.target_points_queue.append([x, y - 1])
-            if x > 0:
+            if x > 0 and [x - 1, y] in self.undetected_loc and [x - 1, y] not in self.target_points_queue:
                 self.target_points_queue.append([x - 1, y])
-            if y + 1 < board.num_cols:
+            if y + 1 < board.num_cols and [x, y + 1] in self.undetected_loc and [x, y + 1] not in self.target_points_queue:
                 self.target_points_queue.append([x, y + 1])
-            if x + 1 < board.num_rows:
+            if x + 1 < board.num_rows and [x + 1, y] in self.undetected_loc and [x + 1, y] not in self.target_points_queue:
                 self.target_points_queue.append([x + 1, y])
 
             self.mode = "Destroy"
