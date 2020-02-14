@@ -11,8 +11,7 @@ import numpy as np
 
 if __name__ == '__main__':
     # get line information in the configs file
-    with open(argv[2], "r") as f2:
-        seed_number = f2.readline()
+    seed_number = argv[2]
     np.random.seed(int(seed_number))
     ship_size_dict = {}
     board_size = []
@@ -23,5 +22,5 @@ if __name__ == '__main__':
             else:
                 ship_size_dict[line.split()[0]] = line.split()[1]
 
-    # test = BattleShip(board_size[0], board_size[1], ship_size_dict)
-    # test.play()
+    test = BattleShip(board_size[0], board_size[1], ship_size_dict)
+    test.play()
