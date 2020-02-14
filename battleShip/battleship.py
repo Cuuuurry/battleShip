@@ -39,7 +39,7 @@ class BattleShip(object):
             name_unique = False
 
             type_of_player = input(f"Enter one of ['Human', 'CheatingAi', "
-                                   f"'SearchDestroyAi', 'RandomAi'] for Player {i}'s type:")
+                                   f"'SearchDestroyAi', 'RandomAi'] for Player {i}'s type: ")
             type_of_player = type_of_player.strip().lower()
             compare_num = len(type_of_player)
 

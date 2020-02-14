@@ -14,7 +14,7 @@ class CheatingAI(Player):
         self.cheating_bag = []
 
     def cheating_name_initializer(self, i):
-        self.player_name = f"Cheating AI {i}"
+        self.player_name = f"Cheating Ai {i}"
         return self.player_name
 
     def player_all_ships_initializer(self):

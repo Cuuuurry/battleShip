@@ -11,14 +11,18 @@ class SearchDestroyAi(Player):
     def __init__(self, listed_ships: List[Ship]):
         super().__init__(listed_ships)
         self.player_type = "SearchDestroyAI"
+        self.undetected_loc = []
         self.mode = "Search"
         self.target_points_queue = []  # the current place, the current ship,
 
     def SD_name_initializer(self, i: int):
-        self.player_name = f"Search Destroy AI {i}"
+        self.player_name = f"Search Destroy Ai {i}"
         return self.player_name
 
     def player_all_ships_initializer(self):
+        for i in range(self.board.num_cols):
+            for j in range(self.board.num_rows):
+                self.undetected_loc.append([i, j])
         for ship in self.ship:
             self.player_single_ship_loader(ship)
         return
@@ -66,23 +70,13 @@ class SearchDestroyAi(Player):
 
     def ship_fire(self, opponent) -> None:
         board = self.scan_board
-        ship = self.ship[0]
-        test = Validation(board, ship)
 
-        ready_to_break = False
-        while not ready_to_break:
-            if not self.target_points_queue:
-                self.mode = "Search"
-            if self.mode == "Search":
-                x = random.randint(0, board.num_rows - 1)
-                y = random.randint(0, board.num_cols - 1)
-            else:
-                x, y = self.target_points_queue.pop(0)
-            ready_to_break = True
-            # location is out of bound or conflict
-            if ready_to_break:
-                if not test.location_fire_checking(board, x, y, verbose=False):
-                    ready_to_break = False
+        if not self.undetected_loc:
+            raise Exception("Game Bug, I should have won")
+
+        loc = random.choice(self.undetected_loc)
+        self.undetected_loc.remove(loc)
+        x, y = loc
 
         if opponent.board[[x, y]] == opponent.board.blank_char:
             print("Miss")

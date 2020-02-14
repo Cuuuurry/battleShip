@@ -11,12 +11,16 @@ class RandomAI(Player):
     def __init__(self, listed_ships):
         super().__init__(listed_ships)
         self.player_type = "RandomAI"
+        self.undetected_loc = []
 
     def random_name_initializer(self, i):
-        self.player_name = f"Random AI {i}"
+        self.player_name = f"Random Ai {i}"
         return self.player_name
 
     def player_all_ships_initializer(self):
+        for i in range(self.board.num_cols):
+            for j in range(self.board.num_rows):
+                self.undetected_loc.append([i,j])
         for ship in self.ship:
             self.player_single_ship_loader(ship)
         return
@@ -63,19 +67,11 @@ class RandomAI(Player):
         return
 
     def ship_fire(self, opponent) -> None:
-        board = self.scan_board
-        ship = self.ship[0]
-        test = Validation(board, ship)
-        ready_to_break = False
-        while not ready_to_break:
-            x = random.randint(0, board.num_rows - 1)
-            y = random.randint(0, board.num_cols - 1)
-            location = (x, y)
-            ready_to_break = True
-            # location is out of bound or conflict
-            if ready_to_break:
-                if not test.location_fire_checking(board, x, y, verbose=False):
-                    ready_to_break = False
+        if not self.undetected_loc:
+            raise Exception("Game Bug, I should have won")
+        loc = random.choice(self.undetected_loc)
+        self.undetected_loc.remove(loc)
+        x, y = loc
 
         if opponent.board[[x, y]] == opponent.board.blank_char:
             print("Miss")
