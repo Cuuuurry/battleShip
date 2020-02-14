@@ -1,4 +1,4 @@
-10 10
+7 7
 Patrol 2
 Submarine 3
 Destroyer 3

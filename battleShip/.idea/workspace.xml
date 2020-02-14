@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="0022bb1d-5549-4bab-98f6-0b5bccb66f2b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/battleship.py" beforeDir="false" afterPath="$PROJECT_DIR$/battleship.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cheatingai.py" beforeDir="false" afterPath="$PROJECT_DIR$/cheatingai.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/randomai.py" beforeDir="false" afterPath="$PROJECT_DIR$/randomai.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/searchdestroyplayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/searchdestroyplayer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/minor_game.txt" beforeDir="false" afterPath="$PROJECT_DIR$/configs/minor_game.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/seed.txt" beforeDir="false" afterPath="$PROJECT_DIR$/configs/seed.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,9 +50,9 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../BattleShipAI/BattleShip" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Python.battleship">
+  <component name="RunManager" selected="Python.main">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="TicTacToe" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -120,28 +119,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="checking" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="TicTacToe" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/checking.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="humanplayer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="TicTacToe" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -158,6 +135,25 @@
       <option name="SCRIPT_NAME" value="C:\Users\Cuuuurry\Desktop\statistics_Q5\ECS032B\projects\battleShip\battleShip\humanplayer.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="TicTacToe" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="C:\Users\Cuuuurry\Desktop\statistics_Q5\ECS032B\projects\battleShip\battleShip\configs\minor_game.txt 25" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
       <option name="REDIRECT_INPUT" value="false" />
@@ -186,13 +182,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.battleship" />
+      <item itemvalue="Python.board" />
+      <item itemvalue="Python.humanplayer" />
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.player" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.battleship" />
         <item itemvalue="Python.humanplayer" />
         <item itemvalue="Python.player" />
         <item itemvalue="Python.board" />
-        <item itemvalue="Python.checking" />
       </list>
     </recent_temporary>
   </component>
@@ -219,7 +222,9 @@
       <workItem from="1581471206420" duration="9888000" />
       <workItem from="1581484010174" duration="34000" />
       <workItem from="1581546235232" duration="15584000" />
-      <workItem from="1581637340492" duration="1289000" />
+      <workItem from="1581637340492" duration="1418000" />
+      <workItem from="1581641796855" duration="19000" />
+      <workItem from="1581649335822" duration="1412000" />
     </task>
     <task id="LOCAL-00001" summary="fulfill basic settings">
       <created>1580197374219</created>
@@ -240,34 +245,42 @@
     <option name="LAST_COMMIT_MESSAGE" value="fulfill basic settings" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="186" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1581650346957">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="186" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1581650346957" />
+    <state x="421" y="45" key="#com.intellij.ide.macro.MacrosDialog" timestamp="1581650233537">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="421" y="45" key="#com.intellij.ide.macro.MacrosDialog/0.0.1280.680@0.0.1280.680" timestamp="1581650233537" />
     <state x="197" y="0" key="CommitChangelistDialog2" timestamp="1580197373342">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="197" y="0" key="CommitChangelistDialog2/0.0.1280.680@0.0.1280.680" timestamp="1580197373342" />
-    <state x="421" y="97" key="FileChooserDialogImpl" timestamp="1581484042659">
+    <state x="421" y="97" key="FileChooserDialogImpl" timestamp="1581641812691">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="421" y="97" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1581484042659" />
-    <state width="1237" height="519" key="GridCell.Tab.0.bottom" timestamp="1581638610381">
+    <state x="421" y="97" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1581641812691" />
+    <state width="1237" height="519" key="GridCell.Tab.0.bottom" timestamp="1581638758940">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="519" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1581638610381" />
-    <state width="1237" height="519" key="GridCell.Tab.0.center" timestamp="1581638610380">
+    <state width="1237" height="519" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1581638758940" />
+    <state width="1237" height="519" key="GridCell.Tab.0.center" timestamp="1581638758940">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="519" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1581638610380" />
-    <state width="1237" height="519" key="GridCell.Tab.0.left" timestamp="1581638610380">
+    <state width="1237" height="519" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1581638758940" />
+    <state width="1237" height="519" key="GridCell.Tab.0.left" timestamp="1581638758940">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="519" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1581638610380" />
-    <state width="1237" height="519" key="GridCell.Tab.0.right" timestamp="1581638610381">
+    <state width="1237" height="519" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1581638758940" />
+    <state width="1237" height="519" key="GridCell.Tab.0.right" timestamp="1581638758940">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1237" height="519" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1581638610381" />
-    <state x="337" y="166" key="com.intellij.ide.util.TipDialog" timestamp="1581637341365">
+    <state width="1237" height="519" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1581638758940" />
+    <state x="337" y="166" key="com.intellij.ide.util.TipDialog" timestamp="1581641797857">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="337" y="166" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1581637341365" />
+    <state x="337" y="166" key="com.intellij.ide.util.TipDialog/0.0.1280.680@0.0.1280.680" timestamp="1581641797857" />
     <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1580609173963">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -280,6 +293,6 @@
     <SUITE FILE_PATH="coverage/battleShip$player.coverage" NAME="player Coverage Results" MODIFIED="1581471600828" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/battleShip$humanplayer.coverage" NAME="humanplayer Coverage Results" MODIFIED="1581471623932" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/TicTacToe$tictactoegame.coverage" NAME="tictactoegame Coverage Results" MODIFIED="1580184551894" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/battleShip$battleship.coverage" NAME="battleship Coverage Results" MODIFIED="1581638610373" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/battleShip$battleship.coverage" NAME="battleship Coverage Results" MODIFIED="1581638685056" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

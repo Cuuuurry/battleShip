@@ -7,12 +7,12 @@ This File:
 
 from sys import argv
 from battleship import BattleShip
-import numpy as np
+import random
 
 if __name__ == '__main__':
     # get line information in the configs file
     seed_number = argv[2]
-    np.random.seed(int(seed_number))
+    random.seed(int(seed_number))
     ship_size_dict = {}
     board_size = []
     with open(argv[1], "r") as f:
