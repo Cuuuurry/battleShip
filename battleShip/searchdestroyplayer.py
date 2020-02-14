@@ -28,6 +28,7 @@ class SearchDestroyAi(Player):
         size = ship.ship_size
         test = Validation(board, ship)
 
+        ready_to_break = False
         while not ready_to_break:
             ready_to_break = True
 
@@ -36,8 +37,8 @@ class SearchDestroyAi(Player):
             ship.ship_oriented(orientation)
             is_vertical = bool(ship.ship_ori == "vertical")
 
-            x = random.randint(0, board.num_rows - ship.ship_size * (1 - is_vertical))
-            y = random.randint(0, board.num_cols - ship.ship_size * is_vertical)
+            x = random.randint(0, board.num_rows - 1 - (ship.ship_size - 1) * is_vertical)
+            y = random.randint(0, board.num_cols - 1 - (ship.ship_size - 1) * (1 - is_vertical))
 
             # Checks to make sure the ship doesn't lie outside the board and that
             # no ships have been placed on those spots.
@@ -60,13 +61,14 @@ class SearchDestroyAi(Player):
         ship.ship_located((x, y))
 
         for loc in ship.ship_loc:
-            heapq.heappush(self.player_remain_loc, loc)
+            heapq.heappush(self.player_ships_loc, loc)
         return
 
     def ship_fire(self, opponent) -> None:
         board = self.scan_board
         ship = self.ship[0]
         test = Validation(board, ship)
+
         ready_to_break = False
         while not ready_to_break:
             if not self.target_points_queue:
@@ -96,14 +98,14 @@ class SearchDestroyAi(Player):
                         print("You destroyed {}'s {}".format(opponent.player_name, ship.ship_name))
                     opponent.player_health_change()
                     break
-            if x > 0:
-                self.target_points_queue.append([x - 1, y])
             if y > 0:
                 self.target_points_queue.append([x, y - 1])
-            if x + 1 < board.num_rows:
-                self.target_points_queue.append([x + 1, y])
+            if x > 0:
+                self.target_points_queue.append([x - 1, y])
             if y + 1 < board.num_cols:
                 self.target_points_queue.append([x, y + 1])
+            if x + 1 < board.num_rows:
+                self.target_points_queue.append([x + 1, y])
 
             self.mode = "Destroy"
 

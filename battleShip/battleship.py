@@ -31,7 +31,7 @@ class BattleShip(object):
 
     def players_register(self) -> None:
         ship_size_dict = self.ship_size_dict
-        for i in range(2):
+        for i in range(1, 3):
             ship_list = []
             for ship_name, ship_size in ship_size_dict.items():
                 new_ship = Ship(ship_name, int(ship_size))

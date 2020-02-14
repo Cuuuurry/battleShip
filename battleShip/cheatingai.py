@@ -27,6 +27,7 @@ class CheatingAI(Player):
         size = ship.ship_size
         test = Validation(board, ship)
 
+        ready_to_break = False
         while not ready_to_break:
             ready_to_break = True
 
@@ -35,8 +36,8 @@ class CheatingAI(Player):
             ship.ship_oriented(orientation)
             is_vertical = bool(ship.ship_ori == "vertical")
 
-            x = random.randint(0, board.num_rows - ship.ship_size * (1 - is_vertical))
-            y = random.randint(0, board.num_cols - ship.ship_size * is_vertical)
+            x = random.randint(0, board.num_rows - 1 - (ship.ship_size - 1) * is_vertical)
+            y = random.randint(0, board.num_cols - 1 - (ship.ship_size - 1) * (1 - is_vertical))
 
             # Checks to make sure the ship doesn't lie outside the board and that
             # no ships have been placed on those spots.
