@@ -8,7 +8,7 @@ from player import Player
 
 
 class HumanPlayer(Player):
-    def __init__(self, listed_ships: List[Ship]):
+    def __init__(self, listed_ships: List[Ship]) -> None:
         super().__init__(listed_ships)
         self.player_type = "human"
 

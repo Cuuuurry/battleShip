@@ -3,16 +3,13 @@ This File:
     Class battleShip for game process
 
 """
-from sys import argv
-from typing import Iterable, TypeVar, Tuple, Dict
-
+from typing import Dict
 from cheatingai import CheatingAI
-from checking import Validation
-from player import Player
-from ship import Ship
-from randomai import RandomAI
 from humanplayer import HumanPlayer
+from randomai import RandomAI
 from searchdestroyplayer import SearchDestroyAi
+from ship import Ship
+
 
 class BattleShip(object):
     """

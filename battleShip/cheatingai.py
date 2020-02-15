@@ -8,21 +8,21 @@ from player import Player
 
 
 class CheatingAI(Player):
-    def __init__(self, listed_ships):
+    def __init__(self, listed_ships: List[Ship]) -> None:
         super().__init__(listed_ships)
         self.player_type = "CheatingAI"
         self.cheating_bag = []
 
-    def cheating_name_initializer(self, i):
+    def cheating_name_initializer(self, i: int) -> None:
         self.player_name = f"Cheating Ai {i}"
         return self.player_name
 
-    def player_all_ships_initializer(self):
+    def player_all_ships_initializer(self) -> None:
         for ship in self.ship:
             self.player_single_ship_loader(ship)
         return
 
-    def player_single_ship_loader(self, ship: Ship):
+    def player_single_ship_loader(self, ship: Ship) -> None:
         board = self.board
         size = ship.ship_size
         test = Validation(board, ship)
@@ -63,10 +63,10 @@ class CheatingAI(Player):
             heapq.heappush(self.player_ships_loc, loc)
         return
 
-    def cheating_bag_initializer(self, opponent):
+    def cheating_bag_initializer(self, opponent: Player) -> None:
         self.cheating_bag = opponent.player_ships_loc
 
-    def ship_fire(self, opponent) -> None:
+    def ship_fire(self, opponent: Player) -> None:
         if not self.cheating_bag:
             raise Exception("We should have won!")
             return

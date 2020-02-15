@@ -4,7 +4,7 @@ This File:
         Count the fire
 """
 
-from typing import Tuple
+from typing import Tuple, Any
 
 
 class Ship(object):
@@ -31,7 +31,7 @@ class Ship(object):
             print("{} does not represent an Orientation".format(orientation))
             return False
 
-    def ship_located(self, location: Tuple[int]) -> None:
+    def ship_located(self, location: Tuple[Any, Any]) -> None:
         self.ship_loc = set()
         self.ship_loc.add(location)
         for i in range(self.ship_size-1):

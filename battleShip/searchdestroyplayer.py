@@ -8,18 +8,18 @@ from player import Player
 
 
 class SearchDestroyAi(Player):
-    def __init__(self, listed_ships: List[Ship]):
+    def __init__(self, listed_ships: List[Ship]) -> None:
         super().__init__(listed_ships)
         self.player_type = "SearchDestroyAI"
         self.undetected_loc = []
         self.mode = "Search"
         self.target_points_queue = []  # the current place, the current ship,
 
-    def SD_name_initializer(self, i: int):
+    def SD_name_initializer(self, i: int) -> str:
         self.player_name = f"Search Destroy AI {i}"
         return self.player_name
 
-    def player_all_ships_initializer(self):
+    def player_all_ships_initializer(self) -> None:
         for i in range(self.board.num_cols):
             for j in range(self.board.num_rows):
                 self.undetected_loc.append([i, j])
@@ -27,7 +27,7 @@ class SearchDestroyAi(Player):
             self.player_single_ship_loader(ship)
         return
 
-    def player_single_ship_loader(self, ship: Ship):
+    def player_single_ship_loader(self, ship: Ship) -> None:
         board = self.board
         size = ship.ship_size
         test = Validation(board, ship)
@@ -68,7 +68,7 @@ class SearchDestroyAi(Player):
             heapq.heappush(self.player_ships_loc, loc)
         return
 
-    def ship_fire(self, opponent) -> None:
+    def ship_fire(self, opponent: Player) -> None:
         board = self.scan_board
 
         if not self.undetected_loc:

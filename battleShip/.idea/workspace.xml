@@ -3,7 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="0022bb1d-5549-4bab-98f6-0b5bccb66f2b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aiplayer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/battleship.py" beforeDir="false" afterPath="$PROJECT_DIR$/battleship.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cheatingai.py" beforeDir="false" afterPath="$PROJECT_DIR$/cheatingai.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/checking.py" beforeDir="false" afterPath="$PROJECT_DIR$/checking.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/humanplayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/humanplayer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/randomai.py" beforeDir="false" afterPath="$PROJECT_DIR$/randomai.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/searchdestroyplayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/searchdestroyplayer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ship.py" beforeDir="false" afterPath="$PROJECT_DIR$/ship.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +56,11 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Cuuuurry\Desktop\statistics_Q5\ECS032B\projects\battleShip\battleShip" />
+    </key>
   </component>
   <component name="RunManager" selected="Python.main">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -222,7 +234,7 @@
       <workItem from="1581546235232" duration="15584000" />
       <workItem from="1581637340492" duration="1418000" />
       <workItem from="1581641796855" duration="19000" />
-      <workItem from="1581649335822" duration="5893000" />
+      <workItem from="1581649335822" duration="9020000" />
     </task>
     <task id="LOCAL-00001" summary="fulfill basic settings">
       <created>1580197374219</created>

@@ -57,7 +57,7 @@ class Validation(object):
         else:
             return True
 
-    def ship_place_in_board_checking(self, x: int, y: int, is_vertical: bool):
+    def ship_place_in_board_checking(self, x: int, y: int, is_vertical: bool) -> bool:
         """
         check ship place in board
         :param x: row
@@ -75,7 +75,7 @@ class Validation(object):
         else:
             return True
 
-    def ship_place_conflict_checking(self, x: int, y: int, is_vertical: bool, flag=False, verbose=True):
+    def ship_place_conflict_checking(self, x: int, y: int, is_vertical: bool, flag=False, verbose=True) -> bool:
         """
         check ship_place_conflict
         :param verbose: bool
@@ -110,7 +110,7 @@ class Validation(object):
         return flag
 
     @staticmethod
-    def location_length_checking(location: str, fire=False):
+    def location_length_checking(location: str, fire=False) -> bool:
         """
         check length of input location
         :param fire:
@@ -131,7 +131,7 @@ class Validation(object):
             return True
 
     @staticmethod
-    def location_fire_checking(board: Board, x: int, y: int, verbose=True):
+    def location_fire_checking(board: Board, x: int, y: int, verbose=True) -> bool:
         """
         check fire location at board
         :param verbose:
