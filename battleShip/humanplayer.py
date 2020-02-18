@@ -94,7 +94,7 @@ class HumanPlayer(Player):
         for loc in ship.ship_loc:
             heapq.heappush(self.player_ships_loc, loc)
 
-    def ship_fire(self, opponent) -> None:
+    def ship_fire(self, opponent: Player) -> None:
         board = self.scan_board
         ship = self.ship[0]
         test = Validation(board, ship)
